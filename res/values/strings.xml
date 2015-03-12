@@ -2,16 +2,14 @@
 <resources>
 
     <string name="app_name">EDF-Florian</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings1">Menu Item 1</string>
-    <string name="action_settings2">Menu Item 2</string>
-    <string name="action_settings3">Menu Item 3</string>
+    <color name="Blanc">#FFFFFF</color>
     
     <!-- Valeurs pour l'ActivityMain -->
     <string name="lblIdentification">Identification</string>
     <string name="lblClients">Relevé Compteur</string>
     <string name="lblImport">Import de données</string>
     <string name="lblSave">Sauvegarde</string>
-    <color name="Blanc">#FFFFFF</color>
+    
+    
 
 </resources>
