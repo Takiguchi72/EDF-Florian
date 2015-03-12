@@ -40,7 +40,7 @@ public class CreateBdClient extends SQLiteOpenHelper {
 				+ COL_DATEDERNIERRELEVE + " TEXT,"
 				+ COL_SIGNATUREBASE64 	+ " TEXT,"
 				+ COL_DERNIERRELEVE		+ " REAL,"
-				+ COL_SITUATION 		+ " INTEGER,"
+				+ COL_SITUATION 		+ " INTEGER"
 			+");";
 	
 	/* *****************************
