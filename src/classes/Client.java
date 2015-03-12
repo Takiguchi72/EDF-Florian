@@ -169,7 +169,13 @@ public class Client {
 		situation = 0;
 	}//fin Client(...)
 	
-	
+	/* *******************
+	 *  M E T H O D E S  *
+	 *********************/
+	/**
+	 * Retourne la date du jour
+	 * @return Date au format "dd/MM/yy" [String]
+	 */
 	private String getDateDuJour()
 	{
 		//Récupération de la date du jour
