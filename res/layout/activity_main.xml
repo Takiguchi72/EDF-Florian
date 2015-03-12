@@ -1,0 +1,134 @@
+<!-- Fenêtre principale -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Blanc"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.btssio.edf_florian.MainActivity" >
+
+    <!-- Première ligne horizontale { Identification + Clients} -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp" >
+
+        <!-- Première colonne { Identification } -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- Image "Identification" -->
+            <ImageView
+                android:id="@+id/imgVIdentification"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/identification" />
+
+            <!-- Légende "Identification" -->
+            <TextView
+                android:id="@+id/edtIdentification"
+                android:layout_width="140dp"
+                android:layout_height="25dp"
+                android:layout_gravity="bottom"
+                android:ems="10"
+                android:text="@string/lblIdentification"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+
+        <!-- Deuxième colonne { Clients } -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="50dp"
+            android:orientation="vertical" >
+
+            <!-- Image "Clients" -->
+            <ImageView
+                android:id="@+id/imgVClients"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="top"
+                android:src="@drawable/client" />
+
+            <!-- Légende "Clients" -->
+            <TextView
+                android:id="@+id/edtClients"
+                android:layout_width="140dp"
+                android:layout_height="25dp"
+                android:ems="10"
+                android:text="@string/lblClients"
+                android:gravity="center_horizontal" >
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+    <!-- FIN - Première ligne horizontale -->
+
+    <!-- Deuxième ligne horizontale { Import + Save } -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp" >
+
+        <!-- Première colonne { Import } -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!-- Image "Import" -->
+            <ImageView
+                android:id="@+id/imgVImport"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/transfert" />
+
+            <!-- Légende "Import" -->
+            <TextView
+                android:id="@+id/edtImport"
+                android:layout_width="140dp"
+                android:layout_height="25dp"
+                android:ems="10"
+                android:text="@string/lblImport"
+                android:gravity="center_horizontal" >
+            </TextView>
+        </LinearLayout>
+
+        <!-- Deuxième colonne { Save } -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:orientation="vertical" >
+
+            <!-- Image "Save" -->
+            <ImageView
+                android:id="@+id/imgVSave"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/sauvegarde" />
+
+            <!-- Légende "Save" -->
+            <TextView
+                android:id="@+id/edtSave"
+                android:layout_width="140dp"
+                android:layout_height="25dp"
+                android:ems="10"
+                android:text="@string/lblSave"
+                android:gravity="center_horizontal" />
+        </LinearLayout>
+    </LinearLayout>
+    <!-- FIN - Deuxième ligne horizontale -->
+</LinearLayout>
