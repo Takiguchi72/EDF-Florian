@@ -142,14 +142,25 @@ public class BdAdapter {
 	}//fin cursorToClient
 	
 	
-	/*public Client getClientWithIdentifiant(String identifiant)
+	public Client getClientWithIdentifiant(String identifiant)
 	{
 		//Récupère dans un Cursor les valeurs correspondant à un article
 		//grâce à sa désignation
 		Cursor c = db.query(TABLE_CLIENTS,
-							new String[] {},
-							columns, selection, selectionArgs, groupBy, having, orderBy, limit, cancellationSignal)
-	}*/
+							new String[] {	COL_ID,
+											COL_NOM,
+											COL_PRENOM,
+											COL_ADRESSE,
+											COL_CP,
+											COL_VILLE,
+											COL_TEL,
+											COL_IDCOMPTEUR,
+											COL_DATEANCIENRELEVE,
+											COL_ANCIENRELEVE},
+							COL_ID + " LIKE \"" + identifiant + "\"",
+							null, null, null, null);
+		return cursorToClient(c);
+	}//fin getClientWithIdentifiant
 	
 	/**
 	 * Met à jour un client à partir d'un objet de classe Client
