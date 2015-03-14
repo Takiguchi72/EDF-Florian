@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		testBd();
+		//testBd(); //==> TEST OK ! :)
 	}//fin onCreate
 
 	@Override
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 									"compteur01",
 									"01/02/03",
 									12.3);
-		Log.d("Étape #2", afficherClient(unClient));
+		Log.d("Étape #2", unClient.toString());
 		Log.d("Étape #3", "Ouverture de la bdd...");
 		//On ouvre la bdd pourduration pouvoir ouvrir dedans
 		clientsBdd.open();
@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
 		//Pour vérifier que l'on a bien créé un Article dans la bdd,
 		//on l'extrait de a bdd grâce à l'identifiant de Client que l'on a créé précédament
 		Client unClientFromBdd = clientsBdd.getClientWithIdentifiant("cli01");
-		Log.d("Étape #6", afficherClient(unClientFromBdd));
+		Log.d("Étape #6", unClientFromBdd.toString());
 		//Si on a bien récupéré un client grâce à l'id donné,
 		if(unClientFromBdd != null)
 		{
@@ -81,14 +81,14 @@ public class MainActivity extends Activity {
 		Log.d("Étape #7", "Modification du client qu'on vient de récupérer");
 		//on modifie son nom,
 		unClientFromBdd.setNom("unAutreNom");
-		Log.d("Étape #8", afficherClient(unClientFromBdd));
+		Log.d("Étape #8", unClientFromBdd.toString());
 		Log.d("Étape #9", "Modification du client dans la base");
 		//puis on met à jour la bdd
 		clientsBdd.updateClient(unClientFromBdd.getIdentifiant(), unClientFromBdd);
 		Log.d("Étape #10", "Récupération du client modifié");
 		//On extrait le client de la bdd grâce à son nouvel identifiant
 		Client unAutreClientFromBdd = clientsBdd.getClientWithIdentifiant("cli01");
-		Log.d("Étape #11", afficherClient(unAutreClientFromBdd));
+		Log.d("Étape #11", unAutreClientFromBdd.toString());
 		//S'il existe un client possédant cet identifiant dans la bdd
 		if(unAutreClientFromBdd != null)
 		{
@@ -115,11 +115,4 @@ public class MainActivity extends Activity {
 		}//fin else
 		clientsBdd.close();
 	}//fin testBd
-	
-	
-	
-	private String afficherClient(Client unClient)
-	{
-		return "Client #" + unClient.getIdentifiant() + ", " + unClient.getNom() + " " + unClient.getPrenom();
-	}
 }//fin classe

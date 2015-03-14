@@ -184,4 +184,16 @@ public class Client {
 		return formater.format(date);
 	}//fin getDateDuJour
 	
+	/**
+	 * Retourne une chaine contenant les informations du client
+	 */
+	public String toString()
+	{
+		return "Client #" 					+ this.getIdentifiant()
+				+ "\n - Nom : " 			+ this.getNom()
+				+ "\n - Prénom : "			+ this.getPrenom()
+				+ "\n - Adresse : "			+ this.getAdresse() + ", " + this.getCodePostal() + " " + this.getVille()
+				+ "\n - Téléphone : "		+ this.getTelephone();
+	}//fin toString()
+	
 }//fin classe
