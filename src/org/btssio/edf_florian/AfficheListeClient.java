@@ -70,5 +70,6 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	{
 		Log.d("Étape", "~ Clic sur le " + position + "° item de la ListView");
 		Toast.makeText(getApplicationContext(),"Choix : " + listeClient.get(position).getIdentifiant(), Toast.LENGTH_SHORT).show();
+		
 	}//fin onItemClick
 }//fin classe

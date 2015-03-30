@@ -18,5 +18,23 @@
     <string name="title_activity_import_donnees">ImportDonnees</string>
     <string name="title_activity_sauvegarde">Sauvegarde</string>
     <string name="title_activity_affiche_liste_client">AfficheListeClient</string>
-
+    <string name="title_activity_modification_client">ModificationClient</string>
+    
+    <!-- Valeurs pour l'activité ModificationClient -->
+    <string name="modifClient_txvIdentifiant">Identifiant :</string>
+	<string name="modifClient_txvIdentite">Identité :</string>
+	<string name="modifClient_txvTelephone">Téléphone :</string>
+	<string name="modifClient_txvAdresse">Adresse :</string>
+	<string name="modifClient_txvCompteur">Compteur :</string>
+	<string name="modifClient_txvAncienReleve">Ancien relevé :</string>
+	<string name="modifClient_txvDateAncienReleve">À la date du :</string>
+	<string name="modifClient_txvReleve">Relevé :</string>
+	<string name="modifClient_txvDateReleve">Date :</string>
+	<string name="modifClient_txvSituation">Situation :</string>
+	<string name="modifClient_btnGeoloc">Géoloc.</string>
+	<string name="modifClient_btnOk">Ok</string>
+	<string name="modifClient_btnAnnuler">Annuler</string>
+	
+	
+    
 </resources>

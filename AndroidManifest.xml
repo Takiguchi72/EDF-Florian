@@ -46,6 +46,10 @@
             android:name=".AfficheListeClient"
             android:label="@string/title_activity_affiche_liste_client" >
         </activity>
+        <activity
+            android:name=".ModificationClient"
+            android:label="@string/title_activity_modification_client" >
+        </activity>
     </application>
 
 </manifest>
