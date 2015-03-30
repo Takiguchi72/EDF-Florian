@@ -22,9 +22,6 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	private List<Client> listeClient;
 	private BdAdapter bdd;
 	private Intent theIntent;
-	private class ViewHolder {
-		//TODO 01 - Générer un view holder qui correspond la la liste des widgets de l'activité, (cf ClientAdapter)
-	}//fin ViewHolder
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +87,7 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		theIntent.putExtra("signatureBase64", 		listeClient.get(position).getSignatureBase64());
 		theIntent.putExtra("dernierReleve", 		listeClient.get(position).getDernierReleve());
 		theIntent.putExtra("situation", 			listeClient.get(position).getSituation());
+		//Lancement de l'activité
 		this.startActivityForResult(theIntent,0);
 	}//fin onItemClick
-	
-	public void initialiserActivite()
-	{
-		//TODO 02 - Créer un ViewHolder, s'inspirer de la classe ClientAdapter, 
-		//			pour pouvoir remplir les widgets de l'activité avec leClient
-	}//fin initialiserActivite
 }//fin classe

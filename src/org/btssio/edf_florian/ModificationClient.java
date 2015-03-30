@@ -8,8 +8,9 @@ import android.view.MenuItem;
 
 public class ModificationClient extends Activity {
 	private Client leClient;
-	
-	
+	private class ViewHolder {
+		//TODO 01 - Générer un view holder qui correspond la la liste des widgets de l'activité, (cf ClientAdapter)
+	}//fin ViewHolder
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,5 +51,11 @@ public class ModificationClient extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}//fin onOptionsItemSelected
+	
+	public void initialiserActivite()
+	{
+		//TODO 02 - Créer un ViewHolder, s'inspirer de la classe ClientAdapter, 
+		//			pour pouvoir remplir les widgets de l'activité avec leClient
+	}//fin initialiserActivite
 }
