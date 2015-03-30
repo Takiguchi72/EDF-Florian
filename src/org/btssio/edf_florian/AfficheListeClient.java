@@ -15,42 +15,37 @@ import android.widget.ListView;
 public class AfficheListeClient extends Activity {
 	private ListView listView;
 	private List<Client> listeClient;
-	private BdAdapter bdAdapter;
+	private BdAdapter bdd;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_affiche_liste_client);
-		Log.d("Étape", "### - New BdAdapter");
-		bdAdapter = new BdAdapter(this);
-		bdAdapter.open();
-		//Insertion de 3 clients
-		Log.d("Étape", "### - Inserion de clients");
-		bdAdapter.insererClient(new Client( "cli10",
-											"LEROUX", 
-											"Brandon", 
-											"5 place Georges Bouttié", 
-											"72000", 
-											"Le Mans", 
-											"0123456789", 
-											"1", 
-											"01/02/03", 
-											12.1));
-		
-		Log.d("Étape", "### - Récupération de la table Clients");
-		listeClient = bdAdapter.getListeDesClients();
+		//On Initialise la bdd
+		Log.d("Étape", "~ Initialisation de la base de données");
+		bdd = new BdAdapter(this);
+		//On ouvre la bdd
+		Log.d("Étape", "~ Ouverture de la bdd");
+		bdd.open();
+		//On supprime tous les tuples de la table pour supprimer les tuples insérrés lors de tests
+		bdd.viderLaTable();
+		//On insère des clients dans la base
+		bdd.insererDesClients();
+		//On récupère les clients de la base de données
+		Log.d("Étape", "~ Récupération du contenu de la table Client");
+		listeClient = bdd.getListeDesClients();
 		
 		listView = (ListView)findViewById(R.id.lvListe);
 		ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
 		listView.setAdapter(clientAdapter);
-	}
+	}//fin onCreate
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.affiche_liste_client, menu);
 		return true;
-	}
+	}//fin onCreateOptionsMenu
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -62,5 +57,5 @@ public class AfficheListeClient extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-}
+	}//fin onOptionsItemSelected
+}//fin classe

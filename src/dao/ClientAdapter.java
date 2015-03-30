@@ -66,16 +66,28 @@ public class ClientAdapter extends BaseAdapter {
 		{
 			holder = new ViewHolder();
 			convertView = layoutInflater.inflate(R.layout.vue_clients, null);
-			holder.textViewIdentifiant = (TextView) convertView.findViewById(R.id.vueIdentifiant);
-			convertView.setTag(holder);
+			holder.textViewIdentifiant  = (TextView) convertView.findViewById(R.id.vueIdentifiant);
+			holder.textViewNom			= (TextView) convertView.findViewById(R.id.vueNom);
+			holder.textViewPrenom		= (TextView) convertView.findViewById(R.id.vuePrenom);
+			holder.textViewTelephone	= (TextView) convertView.findViewById(R.id.vueTel);
+			holder.textViewAdresse		= (TextView) convertView.findViewById(R.id.vueAdresse);
+			holder.textViewCodePostal	= (TextView) convertView.findViewById(R.id.vueCp);
+			holder.textViewVille		= (TextView) convertView.findViewById(R.id.vueVille);
+			
 		}
 		else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.textViewIdentifiant.setText(listeClients.get(position).getIdentifiant());
+		holder.textViewIdentifiant	.setText(listeClients.get(position).getIdentifiant());
+		holder.textViewNom			.setText(listeClients.get(position).getNom());
+		holder.textViewPrenom		.setText(listeClients.get(position).getPrenom());
+		holder.textViewTelephone	.setText(listeClients.get(position).getTelephone());
+		holder.textViewAdresse		.setText(listeClients.get(position).getAdresse());
+		holder.textViewCodePostal	.setText(listeClients.get(position).getCodePostal());
+		holder.textViewVille		.setText(listeClients.get(position).getVille());
+		convertView.setTag(holder);
 		
 		return convertView;
-	}
-
-}
+	}//fin getView
+}//fin classe

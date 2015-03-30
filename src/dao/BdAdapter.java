@@ -116,7 +116,7 @@ public class BdAdapter {
 	}//fin insererClient
 	
 	/**
-	 * Converti un "Cursor" en un Client
+	 * Convertit un "Cursor" en un Client
 	 * @param c
 	 * @return
 	 */
@@ -236,4 +236,43 @@ public class BdAdapter {
 		c.close();
 		return listeDesClients;
 	}//fin getData
+	
+	/**
+	 * Supprime tous les tuples de la table Clients
+	 * 
+	 * À utiliser UNIQUEMENT pour nettoyer la base des insertions inutiles (lors de tests par exemple)
+	 */
+	public void viderLaTable()
+	{
+		Log.d("Étape", "~ Suppression des données de la table Clients");
+		db.delete(TABLE_CLIENTS, null, null);
+	}//fin viderLaTable
+	
+	/**
+	 * Insère des clients dans la base
+	 */
+	public void insererDesClients()
+	{
+		//Insertion de clients
+		//(Les données ont été récupérées sur internet, sur un site générant des identités aléatoires)
+		// => http://fr.fakenamegenerator.com/
+		Log.d("Étape", "~ Insertion des clients dans la base");
+		insererClient(new Client(	"cli1", 			"FOUCAULT", 
+									"Royce",  			"49 rue Isambard", 
+									"97234",  			"FORT-DE-FRANCE", 
+									"0123456789", 		"1", 
+									"01/02/03",  		12.1));
+		
+		insererClient(new Client( 	"cli2",				"ÉTOILE", 
+									"Nouel",  			"45 rue Marie De Médicis", 
+									"59400",  			"CAMBRAI", 
+									"0123456798",  		"2", 
+									"30/04/12",  		21.2));
+		
+		insererClient(new Client( 	"cli3", 			"SAUVÉ", 
+									"Clarimunda",  		"81 rue du Limas", 
+									"64100",  			"BAYONNE", 
+									"0123456789",  		"3", 
+									"21/07/04",  		12.1));
+	}//fin insererLes5Clients
 }//fin classe
