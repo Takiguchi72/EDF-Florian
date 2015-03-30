@@ -1,11 +1,15 @@
 package dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import classes.Client;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
 
 public class BdAdapter {
 	/* *********************
@@ -201,18 +205,35 @@ public class BdAdapter {
 	}//fin removeClientWithId
 	
 	/**
-	 * Retourne un objet de type "Cursor" correspondant au contenu de la table "Clients"
-	 * @return Le contenu de la table "Clients" [Cursor]
+	 * Retourne une liste d'objets de la classe Client, correspondant au contenu de la table "Clients"
+	 * @return Le contenu de la table "Clients" [List<Client>]
 	 */
-	public Cursor getData()
+	public List<Client> getListeDesClients()
 	{
-		return db.rawQuery("SELECT * FROM " + TABLE_CLIENTS, null);
+		//On créer une liste (de Clients) vide
+		List<Client> listeDesClients = new ArrayList<Client>();
+		//On récupère tous les Clients de la table Clients
+		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_CLIENTS, null);
+		//Si la requête n'a rien retourné, on retourne la liste qui est actuellement vide
+		if(c.getCount() == 0)
+			return listeDesClients;
+		//Sinon, on sélectionne la première ligne du resultat retourné par SQLite
+		c.moveToFirst();
+		//On va ajouter un Client à la liste pour chaque tuple du résultat
+		do {
+		  	listeDesClients.add(new Client( c.getString(NUM_COL_ID),
+											c.getString(NUM_COL_NOM),
+											c.getString(NUM_COL_PRENOM),
+											c.getString(NUM_COL_ADRESSE),
+											c.getString(NUM_COL_CP),
+											c.getString(NUM_COL_VILLE),
+											c.getString(NUM_COL_TEL),
+											c.getString(NUM_COL_IDCOMPTEUR),
+											c.getString(NUM_COL_DATEANCIENRELEVE),
+											c.getDouble(NUM_COL_ANCIENRELEVE)));
+		} while (c.moveToNext());
+		//On ferme le curseur pour éviter les soucis
+		c.close();
+		return listeDesClients;
 	}//fin getData
-	
-	
-	
-	
-	
-	
-	
 }//fin classe

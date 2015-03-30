@@ -3,18 +3,36 @@ package org.btssio.edf_florian;
 import classes.Client;
 import dao.BdAdapter;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
-
+public class MainActivity extends Activity implements OnClickListener {
+	private Intent theIntent;
+	private ImageButton imgbtnIdentification;
+	private ImageButton imgbtnClients;
+	private ImageButton imgbtnImport;
+	private ImageButton imgbtnSave;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//Affectation de la vue xml aux attributs "ImageButton", et affectation d'un onClickListener
+	 	imgbtnIdentification = (ImageButton) findViewById(R.id.imgVIdentification);
+	 	imgbtnIdentification.setOnClickListener(this);
+		imgbtnClients = (ImageButton) findViewById(R.id.imgVClients);
+		imgbtnClients.setOnClickListener(this);
+		imgbtnImport = (ImageButton) findViewById(R.id.imgVImport);
+		imgbtnImport.setOnClickListener(this);
+		imgbtnSave = (ImageButton) findViewById(R.id.imgVSave);
+		imgbtnSave.setOnClickListener(this);
 		//testBd(); //==> TEST OK ! :)
 	}//fin onCreate
 
@@ -29,13 +47,37 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
+		/* as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		/*if (id == R.id.action_settings) {
+		if (id == R.id.action_settings) {
 			return true;
 		}*/
 		return super.onOptionsItemSelected(item);
 	}//fin onOptionsItemSelected
+	
+	@Override
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+		 	case R.id.imgVIdentification:
+		 		theIntent = new Intent(this, LayoutIdentification.class);
+		 		break;
+		 	case R.id.imgVClients:
+		 		theIntent = new Intent(this, AfficheListeClient.class);
+		 		break;
+		 	case R.id.imgVImport:
+		 		theIntent = new Intent(this, LayoutImport.class);
+		 		break;
+		 	case R.id.imgVSave:
+		 		theIntent = new Intent(this, LayoutSauvegarde.class);
+		 		break;
+		 	default :
+		 		Log.d("", "Erreur dans le switch du onClick de imageclick");
+		}//fin switch.
+		//lancement de l'activité
+		this.startActivityForResult(theIntent, 0);
+	}//fin onClick
 	
 	/**
 	 * Réalise une suite de tests pour vérifier le bon fonctionnement de la gestion de la bdd

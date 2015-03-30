@@ -27,10 +27,12 @@
             android:orientation="vertical" >
 
             <!-- Image "Identification" -->
-            <ImageView
+
+            <ImageButton
                 android:id="@+id/imgVIdentification"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
+                android:background="@color/Blanc"
                 android:src="@drawable/identification" />
 
             <!-- Légende "Identification" -->
@@ -53,11 +55,17 @@
             android:orientation="vertical" >
 
             <!-- Image "Clients" -->
-            <ImageView
+
+            <ImageButton
                 android:id="@+id/imgVClients"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_gravity="top"
+                android:background="@color/Blanc"
+                android:contentDescription="@string/lblClients"
+                android:minHeight="140dp"
+                android:minWidth="140dp"
+                android:scaleType="centerCrop"
                 android:src="@drawable/client" />
 
             <!-- Légende "Clients" -->
@@ -88,10 +96,12 @@
             android:orientation="vertical" >
 
             <!-- Image "Import" -->
-            <ImageView
+
+            <ImageButton
                 android:id="@+id/imgVImport"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
+                android:background="@color/Blanc"
                 android:src="@drawable/transfert" />
 
             <!-- Légende "Import" -->
@@ -114,10 +124,12 @@
             android:orientation="vertical" >
 
             <!-- Image "Save" -->
-            <ImageView
+
+            <ImageButton
                 android:id="@+id/imgVSave"
                 android:layout_width="140dp"
                 android:layout_height="140dp"
+                android:background="@color/Blanc"
                 android:src="@drawable/sauvegarde" />
 
             <!-- Légende "Save" -->
@@ -131,4 +143,5 @@
         </LinearLayout>
     </LinearLayout>
     <!-- FIN - Deuxième ligne horizontale -->
+
 </LinearLayout>
