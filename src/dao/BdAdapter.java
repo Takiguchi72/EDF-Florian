@@ -97,7 +97,7 @@ public class BdAdapter {
 		//Création d'un ContentValues (fonctionne comme une HashMap)
 		ContentValues values = new ContentValues();
 		//On lui ajoute une valeur associé à une clé (pour chaque nom de colonne où on veut mettre la valeur)
-		//values.put(COL_ID, 					unClient.getIdentifiant());
+		values.put(COL_ID,					unClient.getIdentifiant());
 		values.put(COL_NOM, 				unClient.getNom());
 		values.put(COL_PRENOM, 				unClient.getPrenom());
 		values.put(COL_ADRESSE, 			unClient.getAdresse());

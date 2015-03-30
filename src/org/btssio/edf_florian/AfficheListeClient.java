@@ -10,9 +10,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class AfficheListeClient extends Activity {
+public class AfficheListeClient extends Activity implements OnItemClickListener {
 	private ListView listView;
 	private List<Client> listeClient;
 	private BdAdapter bdd;
@@ -37,6 +42,7 @@ public class AfficheListeClient extends Activity {
 		
 		listView = (ListView)findViewById(R.id.lvListe);
 		ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
+		listView.setOnItemClickListener(this) ;
 		listView.setAdapter(clientAdapter);
 	}//fin onCreate
 
@@ -58,4 +64,11 @@ public class AfficheListeClient extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}//fin onOptionsItemSelected
+	
+	@Override
+	public void onItemClick(AdapterView<?> a, View v, int position, long id)
+	{
+		Log.d("Étape", "~ Clic sur le " + position + "° item de la ListView");
+		Toast.makeText(getApplicationContext(),"Choix : " + listeClient.get(position).getIdentifiant(), Toast.LENGTH_SHORT).show();
+	}//fin onItemClick
 }//fin classe

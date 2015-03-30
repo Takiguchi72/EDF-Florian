@@ -114,7 +114,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		if(unClientFromBdd != null)
 		{
 			//on affiche des données du client récupéré
-			Toast.makeText(this, unClientFromBdd.getIdentifiant() + ", " + unClientFromBdd.getNom() + " " + unClientFromBdd.getPrenom(), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, unClientFromBdd.getIdentifiant() + ", " + unClientFromBdd.getNom() + " " + unClientFromBdd.getPrenom(), Toast.LENGTH_SHORT).show();
 		}//fin if
 		else
 		{
@@ -135,7 +135,7 @@ public class MainActivity extends Activity implements OnClickListener {
 		if(unAutreClientFromBdd != null)
 		{
 			//on affiche des données du client récupéré
-			Toast.makeText(this, unAutreClientFromBdd.getIdentifiant() + ", " + unAutreClientFromBdd.getNom() + " " + unAutreClientFromBdd.getPrenom(), Toast.LENGTH_LONG).show();
+			Toast.makeText(this, unAutreClientFromBdd.getIdentifiant() + ", " + unAutreClientFromBdd.getNom() + " " + unAutreClientFromBdd.getPrenom(), Toast.LENGTH_SHORT).show();
 			Log.d("Étape #12", "Suppression du client dans la base");
 			clientsBdd.removeClientWithId(unClientFromBdd.getIdentifiant());
 		}//fin if
@@ -149,11 +149,11 @@ public class MainActivity extends Activity implements OnClickListener {
 		//Si aucun client n'a été retourné
 		if(unClientFromBdd == null)
 		{
-			Toast.makeText(this, "Le client a bien été supprimé de la bdd :)", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Le client a bien été supprimé de la bdd :)", Toast.LENGTH_SHORT).show();
 		}//fin if
 		else
 		{
-			Toast.makeText(this, "Le client N'a PAS été supprimé de la bdd :(", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Le client N'a PAS été supprimé de la bdd :(", Toast.LENGTH_SHORT).show();
 		}//fin else
 		clientsBdd.close();
 	}//fin testBd
