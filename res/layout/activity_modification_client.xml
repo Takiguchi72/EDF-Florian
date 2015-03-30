@@ -220,7 +220,7 @@
                     android:id="@+id/txvDateReleve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="TextView" />
+                    android:text="@string/modifClient_txvDateReleve" />
 
                 <EditText
                     android:id="@+id/edtDateReleve"

@@ -6,12 +6,12 @@ import classes.Client;
 import dao.BdAdapter;
 import dao.ClientAdapter;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -21,6 +21,10 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	private ListView listView;
 	private List<Client> listeClient;
 	private BdAdapter bdd;
+	private Intent theIntent;
+	private class ViewHolder {
+		//TODO 01 - Générer un view holder qui correspond la la liste des widgets de l'activité, (cf ClientAdapter)
+	}//fin ViewHolder
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,9 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		Log.d("Étape", "~ Ouverture de la bdd");
 		bdd.open();
 		//On supprime tous les tuples de la table pour supprimer les tuples insérrés lors de tests
-		bdd.viderLaTable();
+		//bdd.viderLaTable();
 		//On insère des clients dans la base
-		bdd.insererDesClients();
+		//bdd.insererDesClients();
 		//On récupère les clients de la base de données
 		Log.d("Étape", "~ Récupération du contenu de la table Client");
 		listeClient = bdd.getListeDesClients();
@@ -70,6 +74,28 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	{
 		Log.d("Étape", "~ Clic sur le " + position + "° item de la ListView");
 		Toast.makeText(getApplicationContext(),"Choix : " + listeClient.get(position).getIdentifiant(), Toast.LENGTH_SHORT).show();
-		
+		theIntent = new Intent(this, ModificationClient.class);
+		//On va passer des paramètres à l'activité que l'on va lancer
+		theIntent.putExtra("identifiant",			listeClient.get(position).getIdentifiant());
+		theIntent.putExtra("nom",					listeClient.get(position).getNom());
+		theIntent.putExtra("prenom",				listeClient.get(position).getPrenom());
+		theIntent.putExtra("adresse",				listeClient.get(position).getAdresse());
+		theIntent.putExtra("codePostal",			listeClient.get(position).getCodePostal());
+		theIntent.putExtra("ville",					listeClient.get(position).getVille());
+		theIntent.putExtra("telephone",				listeClient.get(position).getTelephone());
+		theIntent.putExtra("idCompteur",			listeClient.get(position).getIdCompteur());
+		theIntent.putExtra("dateAncienReleve",		listeClient.get(position).getDateAncienReleve());
+		theIntent.putExtra("ancienReleve",			listeClient.get(position).getAncienReleve());
+		theIntent.putExtra("dateDernnierReleve", 	listeClient.get(position).getDateDernierReleve());
+		theIntent.putExtra("signatureBase64", 		listeClient.get(position).getSignatureBase64());
+		theIntent.putExtra("dernierReleve", 		listeClient.get(position).getDernierReleve());
+		theIntent.putExtra("situation", 			listeClient.get(position).getSituation());
+		this.startActivityForResult(theIntent,0);
 	}//fin onItemClick
+	
+	public void initialiserActivite()
+	{
+		//TODO 02 - Créer un ViewHolder, s'inspirer de la classe ClientAdapter, 
+		//			pour pouvoir remplir les widgets de l'activité avec leClient
+	}//fin initialiserActivite
 }//fin classe
