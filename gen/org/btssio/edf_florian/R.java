@@ -36,36 +36,57 @@ public final class R {
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
-        public static final int action_settings=0x7f090009;
-        public static final int action_settings2=0x7f09000a;
-        public static final int action_settings3=0x7f09000b;
-        public static final int edtClients=0x7f090004;
-        public static final int edtIdentification=0x7f090002;
-        public static final int edtImport=0x7f090006;
-        public static final int edtSave=0x7f090008;
-        public static final int imgVClients=0x7f090003;
-        public static final int imgVIdentification=0x7f090001;
-        public static final int imgVImport=0x7f090005;
-        public static final int imgVSave=0x7f090007;
+        public static final int action_settings=0x7f090012;
+        public static final int edtClients=0x7f090005;
+        public static final int edtIdentification=0x7f090003;
+        public static final int edtImport=0x7f090007;
+        public static final int edtSave=0x7f090009;
+        public static final int imageView1=0x7f090011;
+        public static final int imgVClients=0x7f090004;
+        public static final int imgVIdentification=0x7f090002;
+        public static final int imgVImport=0x7f090006;
+        public static final int imgVSave=0x7f090008;
+        public static final int lvListe=0x7f090001;
+        public static final int vueAdresse=0x7f09000e;
+        public static final int vueCp=0x7f09000f;
+        public static final int vueIdentifiant=0x7f09000a;
+        public static final int vueNom=0x7f09000b;
+        public static final int vuePrenom=0x7f09000c;
+        public static final int vueTel=0x7f09000d;
+        public static final int vueVille=0x7f090010;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int activity_affiche_liste_client=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int vue_clients=0x7f030002;
+        public static final int vue_identification=0x7f030003;
+        public static final int vue_import=0x7f030004;
+        public static final int vue_sauvegarde=0x7f030005;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
+        public static final int affiche_liste_client=0x7f080000;
+        public static final int clients=0x7f080001;
+        public static final int identification=0x7f080002;
+        public static final int import_donnees=0x7f080003;
+        public static final int main=0x7f080004;
+        public static final int sauvegarde=0x7f080005;
     }
     public static final class string {
-        public static final int action_settings1=0x7f050002;
-        public static final int action_settings2=0x7f050003;
-        public static final int action_settings3=0x7f050004;
+        public static final int action_settings=0x7f050007;
         public static final int app_name=0x7f050000;
-        public static final int hello_world=0x7f050001;
-        public static final int lblClients=0x7f050006;
+        public static final int hello_world=0x7f050006;
+        public static final int lblClients=0x7f050002;
         /**  Valeurs pour l'ActivityMain 
          */
-        public static final int lblIdentification=0x7f050005;
-        public static final int lblImport=0x7f050007;
-        public static final int lblSave=0x7f050008;
+        public static final int lblIdentification=0x7f050001;
+        public static final int lblImport=0x7f050003;
+        public static final int lblSave=0x7f050004;
+        public static final int title_activity_activite_identification=0x7f050005;
+        public static final int title_activity_affiche_liste_client=0x7f05000c;
+        public static final int title_activity_clients=0x7f050008;
+        public static final int title_activity_import=0x7f050009;
+        public static final int title_activity_import_donnees=0x7f05000a;
+        public static final int title_activity_sauvegarde=0x7f05000b;
     }
     public static final class style {
         /** 
