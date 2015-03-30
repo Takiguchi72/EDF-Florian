@@ -22,6 +22,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".LayoutIdentification"
+            android:label="@string/title_activity_activite_identification" >
+        </activity>
+        <activity
+            android:name=".LayoutClients"
+            android:label="@string/title_activity_clients" >
+        </activity>
+        <activity
+            android:name=".Import"
+            android:label="@string/title_activity_import" >
+        </activity>
+        <activity
+            android:name=".LayoutImport"
+            android:label="@string/title_activity_import_donnees" >
+        </activity>
+        <activity
+            android:name=".LayoutSauvegarde"
+            android:label="@string/title_activity_sauvegarde" >
+        </activity>
+        <activity
+            android:name=".AfficheListeClient"
+            android:label="@string/title_activity_affiche_liste_client" >
+        </activity>
     </application>
 
 </manifest>
