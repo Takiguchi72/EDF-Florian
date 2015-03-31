@@ -41,8 +41,15 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		Log.d("Étape", "~ Récupération du contenu de la table Client");
 		listeClient = bdd.getListeDesClients();
 		
+		Log.d("Étape", "~ Fermeture de la base");
+		bdd.close();
+		
+		Log.d("Étape", "~ Attribution de la vue à listView à partir de R.id.lvListe");
 		listView = (ListView)findViewById(R.id.lvListe);
+		
+		Log.d("Étape", "~ Génération du ClientAdapter");
 		ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
+		
 		listView.setOnItemClickListener(this) ;
 		listView.setAdapter(clientAdapter);
 	}//fin onCreate

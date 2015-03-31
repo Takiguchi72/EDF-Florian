@@ -115,13 +115,13 @@
                 android:layout_marginTop="5dp" >
 
                 <TextView
-                    android:id="@+id/txbCp"
+                    android:id="@+id/txvCp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="01234" />
 
                 <TextView
-                    android:id="@+id/txbVille"
+                    android:id="@+id/txvVille"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Ville" />

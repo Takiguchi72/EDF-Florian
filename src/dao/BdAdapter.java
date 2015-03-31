@@ -257,22 +257,48 @@ public class BdAdapter {
 		//(Les données ont été récupérées sur internet, sur un site générant des identités aléatoires)
 		// => http://fr.fakenamegenerator.com/
 		Log.d("Étape", "~ Insertion des clients dans la base");
+		Log.d("Étape", "~ 		1er client");
 		insererClient(new Client(	"cli1", 			"FOUCAULT", 
 									"Royce",  			"49 rue Isambard", 
 									"97234",  			"FORT-DE-FRANCE", 
-									"0123456789", 		"1", 
-									"01/02/03",  		12.1));
-		
+									"0123456789", 		"19950055123", 
+									"01/02/14",  		3461.35));
+		Log.d("Étape", "~ 		2eme client");
 		insererClient(new Client( 	"cli2",				"ÉTOILE", 
 									"Nouel",  			"45 rue Marie De Médicis", 
 									"59400",  			"CAMBRAI", 
-									"0123456798",  		"2", 
-									"30/04/12",  		21.2));
-		
+									"0123456798",  		"19950055124", 
+									"30/04/14",  		2147.84));
+		Log.d("Étape", "~ 		3eme client");
 		insererClient(new Client( 	"cli3", 			"SAUVÉ", 
 									"Clarimunda",  		"81 rue du Limas", 
 									"64100",  			"BAYONNE", 
 									"0123456789",  		"3", 
-									"21/07/04",  		12.1));
+									"21/07/14",  		1264.92));
+		Log.d("Étape", "~ 		4eme client");
+		insererClient(new Client( 	"cli4", 			"COLLIN", 
+									"Stéphanie",  		"90 rue de l'Aigle", 
+									"93210",  			"LA PLAINE-SAINT-DENIS", 
+									"0126448784",  		"19950055125", 
+									"16/08/14",  		2463.5));
+		Log.d("Étape", "~ 		5eme client");
+		insererClient(new Client( 	"cli5", 			"BOILEAU", 
+									"Olivier",  		"61 rue du Général Ailleret", 
+									"97139",  			"LES ABYMES", 
+									"0174821550",  		"3", 
+									"13/07/14",  		1801.43));
+		Log.d("Étape", "~ 		6eme client");
+		insererClient(new Client( 	"cli6", 			"MENARD", 
+									"Émmelyne",  		"7 rue Goya", 
+									"72000",  			"LE MANS", 
+									"0147614572",  		"19950055126", 
+									"07/10/14",  		2973.81));
+		Log.d("Étape", "~ 		7eme client");
+		insererClient(new Client( 	"cli7", 			"NEUFVILLE", 
+									"Gabriel",  		"4 chemin des Bateliers", 
+									"20090",  			"AJACCIO", 
+									"0163458701",  		"19950055127", 
+									"20/07/14",  		945.6));
+		Log.d("Étape", "~ Insertion des clients terminée !");
 	}//fin insererLes5Clients
 }//fin classe

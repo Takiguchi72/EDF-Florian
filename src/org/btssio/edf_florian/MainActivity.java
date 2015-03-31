@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -19,6 +20,8 @@ public class MainActivity extends Activity implements OnClickListener {
 	private ImageButton imgbtnClients;
 	private ImageButton imgbtnImport;
 	private ImageButton imgbtnSave;
+	private Button btnInitBdd;
+	private BdAdapter bdd;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		imgbtnImport.setOnClickListener(this);
 		imgbtnSave = (ImageButton) findViewById(R.id.imgVSave);
 		imgbtnSave.setOnClickListener(this);
+		btnInitBdd = (Button) findViewById(R.id.btnInitBdd);
+		btnInitBdd.setOnClickListener(this);
 		//testBd(); //==> TEST OK ! :)
 	}//fin onCreate
 
@@ -58,6 +63,7 @@ public class MainActivity extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v)
 	{
+		Log.d("Étape", "~ Click sur une image !");
 		switch (v.getId())
 		{
 		 	case R.id.imgVIdentification:
@@ -72,11 +78,30 @@ public class MainActivity extends Activity implements OnClickListener {
 		 	case R.id.imgVSave:
 		 		theIntent = new Intent(this, LayoutSauvegarde.class);
 		 		break;
+		 	case R.id.btnInitBdd:
+		 		bdd = new BdAdapter(this);
+		 		bdd.open();
+		 		try{
+		 			bdd.viderLaTable();
+		 			Toast.makeText(this, "La table Client a été vidée", Toast.LENGTH_SHORT).show();
+		 		} catch (Exception ex) {
+		 			Log.d("Étape", "~ Impossible de vider la table Client !");
+		 			Toast.makeText(this, "Impossible de vider la table Client !", Toast.LENGTH_SHORT).show();
+		 		}
+		 		try {
+		 			bdd.insererDesClients();
+			 		Toast.makeText(this, "Réinitialisation de la bdd terminée !", Toast.LENGTH_SHORT).show();
+		 		} catch (Exception ex) {
+		 			Log.d("Étape", "~ Impossible d'insérer les nouveaux clients !");
+		 			Toast.makeText(this, "Impossible d'insérer les nouveaux clients !", Toast.LENGTH_SHORT).show();
+		 		}//fin catch
+		 		break;
 		 	default :
 		 		Log.d("", "Erreur dans le switch du onClick de imageclick");
 		}//fin switch.
-		//lancement de l'activité
-		this.startActivityForResult(theIntent, 0);
+		if(v.getId() != R.id.btnInitBdd)
+			this.startActivityForResult(theIntent, 0); //lancement de l'activité
+		
 	}//fin onClick
 	
 	/**
