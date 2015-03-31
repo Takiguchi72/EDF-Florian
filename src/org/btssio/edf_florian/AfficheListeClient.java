@@ -74,6 +74,22 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	}//fin onOptionsItemSelected
 	
 	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//On récupère la réponse à la question posée, et on le stoque dans la variable reponses[numQuestion]
+		//reponses[data.getExtras().getInt("Numero")] = data.getExtras().getBoolean("Reponse");
+		int indexClient = data.getExtras().getInt("indexClient");
+		
+		bdd.open();
+		Client clientAModifier = bdd.getClientWithIdentifiant(listeClient.get(indexClient).getIdentifiant());
+		bdd.close();
+		
+		listeClient.get(indexClient).setAncienReleve(clientAModifier.getAncienReleve());
+		listeClient.get(indexClient).setDateAncienReleve(clientAModifier.getDateAncienReleve());
+		listeClient.get(indexClient).setSituation(clientAModifier.getSituation());
+		
+	}//fin onActivityResult
+	
+	@Override
 	public void onItemClick(AdapterView<?> a, View v, int position, long id)
 	{
 		Log.d("Étape", "~ Clic sur le " + position + "° item de la ListView");
@@ -94,6 +110,8 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		theIntent.putExtra("signatureBase64", 		listeClient.get(position).getSignatureBase64());
 		theIntent.putExtra("dernierReleve", 		listeClient.get(position).getDernierReleve());
 		theIntent.putExtra("situation", 			listeClient.get(position).getSituation());
+		
+		theIntent.putExtra("indexClient", 			position);
 		//Lancement de l'activité
 		this.startActivityForResult(theIntent,0);
 	}//fin onItemClick
