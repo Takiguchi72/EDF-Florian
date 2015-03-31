@@ -299,6 +299,12 @@ public class BdAdapter {
 									"20090",  			"AJACCIO", 
 									"0163458701",  		"19950055127", 
 									"20/07/14",  		945.6));
+		Log.d("Étape", "~ 		8eme client");
+		insererClient(new Client( 	"cli8", 			"DESJARDINS", 
+									"Aurélie",  		"70 rue Sbastopol", 
+									"42000",  			"SAINT-ÉTIENNE", 
+									"0142087569",  		"19950055128", 
+									"06/02/14",  		1851.47));
 		Log.d("Étape", "~ Insertion des clients terminée !");
 	}//fin insererLes5Clients
 }//fin classe
