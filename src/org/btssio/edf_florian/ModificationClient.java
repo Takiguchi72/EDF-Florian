@@ -134,10 +134,13 @@ public class ModificationClient extends Activity implements OnClickListener{
 					
 					//En passant à la nouvelle activity l'identifiant du client
 					intentVoirSignature.putExtra("identifiant", leClient.getIdentifiant());
-					
 					//On lance l'activity
 					this.startActivity(intentVoirSignature);
 				}//fin if
+				else
+				{
+					Toast.makeText(this, "Aucune signature n'est enregistrée pour le client", Toast.LENGTH_LONG).show();
+				}//fin else
 				break;
 			/* ~~~~~~~~~~~ *
 			 *  Bouton OK  *
@@ -186,6 +189,24 @@ public class ModificationClient extends Activity implements OnClickListener{
 				break;
 		}//fin switch
 	}//fin onClick
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		//Si l'activité s'est bien terminée, et a bien retourné des données via "data"
+		if(resultCode == RESULT_OK)
+		{
+			Log.d("Étape", "~ L'activité \"CaptureSignature\" a bien retourné un résultat");
+		
+			Log.d("Étape", "~ Mise à jour du client en mémoire depuis la bdd");
+			
+			//Puis on récupère le client à modifier dans la bdd
+			bdd = new BdAdapter(this);
+			bdd.open();
+			leClient = bdd.getClientWithIdentifiant(leClient.getIdentifiant());
+			bdd.close();
+			
+		}//fin if
+	}//fin onActivityResult
 	
 	/**
 	 * Effectue les contrôles de saisie avant de modifier le client dans la BDD

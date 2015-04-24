@@ -44,5 +44,6 @@
     
     <string name="capt_sign_btnEffacer">Effacer</string>
     <string name="capt_sign_btnSauvegarder">Sauvegarder</string>
+    <string name="aff_sign_btnRetour">Retour</string>
 
 </resources>

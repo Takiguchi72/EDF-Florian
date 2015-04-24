@@ -1,8 +1,11 @@
 package org.btssio.edf_florian;
 
+import java.io.ByteArrayOutputStream;
+
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +13,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import classes.Client;
 import dao.BdAdapter;
 
@@ -89,6 +94,31 @@ public class CaptureSignture extends Activity implements OnClickListener{
 			path.reset();invalidate();
 			btnSauvegarder.setEnabled(false);
 		}//fin reinitialiser
+		
+		public String save()
+		{
+			String vretour;
+			if (bitmap == null)
+			{
+				bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(),
+							Bitmap.Config.RGB_565);
+			}//fin if
+			
+			try {
+				canvas = new Canvas(bitmap);
+				this.draw(canvas);
+				ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ByteStream);
+				byte[] b = ByteStream.toByteArray();
+				vretour = Base64.encodeToString(b, Base64.DEFAULT);
+
+			} catch (Exception e) {
+				Toast.makeText(getApplicationContext(), "Erreur Sauvegarde", Toast.LENGTH_LONG).show();
+				vretour = null;
+			}//fin catch
+			Log.d("Signature", vretour);
+			return vretour;
+		}//fin save
 	}//fin Signature
 	
 	@Override
@@ -150,9 +180,8 @@ public class CaptureSignture extends Activity implements OnClickListener{
 	}
 
 	@Override
-	public void onClick(View v) {
-//
-//Sur le clic du bouton clear, appelez la méthode de Signature permettant de réinitialiser le dessin et rendez le bouton save inaccessible. 
+	public void onClick(View v)
+	{
 		Log.d("Étape", "~ Click sur un bouton");
 		switch(v.getId())
 		{
@@ -167,8 +196,28 @@ public class CaptureSignture extends Activity implements OnClickListener{
 				//Sur le clic du bouton save, appelez la méthode de Signature permettant de sauvegarder le dessin en String, 
 				//puis modifiez la variable signature_Base64 de l'objet client, 
 				//sauvegardez l'objet client et appelez finish()
+				Log.d("Étape", "~ Conversion de l'image en chaîne codée");
+				leClient.setSignatureBase64(signature.save());
+				
+				Log.d("Étape", "~ Enregistrement de la signature dans la bdd");
+				BdAdapter bdd = new BdAdapter(this);
+				bdd.open();
+				bdd.updateClient(leClient.getIdentifiant(), leClient);
+				
+				Client verif = bdd.getClientWithIdentifiant(leClient.getIdentifiant());
+				if(signature.save().equals(verif.getSignatureBase64()))
+					Log.d("Signature", "Les signatures sont identiques");
+				else
+					Log.d("Signature", "ERREUR - Signatures différentes");
+				bdd.close();
+				
+				Intent returnIntent = new Intent();
+				//On indique à l'activité appelante qu'on va lui retourner des données, et donc que l'activité s'est bien passée
+				setResult(RESULT_OK,returnIntent);
+				
+				//On termine l'activité ModificationClient
+				finish();
 				break;
 		}//fin switch
-
-	}
-}
+	}//fin onClick
+}//fin classe
