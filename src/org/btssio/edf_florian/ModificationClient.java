@@ -33,6 +33,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 	private EditText editTextSituation;
 	private BdAdapter bdd;
 	private Button btnOk;
+	private Button btnGeoloc;
 	
 	/**
 	 * Initialise l'activité
@@ -108,6 +109,10 @@ public class ModificationClient extends Activity implements OnClickListener{
 				finish();
 				break;
 			case R.id.btnGeoloc:
+				Log.d("Étape", "~ Click sur Géoloc. détecté");
+				Intent theIntent = new Intent(this, ActivityGeolocalisation.class);
+				theIntent.putExtra("identifiant", leClient.getIdentifiant());
+				this.startActivityForResult(theIntent,0);
 				break;
 		}//fin switch
 	}//fin onClick
@@ -249,5 +254,8 @@ public class ModificationClient extends Activity implements OnClickListener{
 		
 		btnOk = (Button) this.findViewById(R.id.btnOk);
 		btnOk.setOnClickListener(this);
+		
+		btnGeoloc = (Button) this.findViewById(R.id.btnGeoloc);
+		btnGeoloc.setOnClickListener(this);
 	}//fin initialiserActivite
 }//fin classe
