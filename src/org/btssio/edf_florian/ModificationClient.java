@@ -33,6 +33,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 	private EditText editTextSituation;
 	private BdAdapter bdd;
 	private Button btnOk;
+	private Button btnAnnuler;
 	private Button btnGeoloc;
 	
 	/**
@@ -43,10 +44,11 @@ public class ModificationClient extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_modification_client);
 		
+		//On va enregistrer l'index du client actuel qui sera modifié pour pouvoir mettre à jour la liste par la suite
 		indexClientDansListe = this.getIntent().getExtras().getInt("indexClient");
 		
 		Log.d("Étape", "~ Création du client à partir des extras"); 
-		//Initialisation du client
+		//Initialisation du client à partir des paramètres qu'a envoyé l'activité "AfficheListeClient" avant de lancer cette activité
 		leClient = new Client(	this.getIntent().getExtras().getString("identifiant"),
 								this.getIntent().getExtras().getString("nom"),
 								this.getIntent().getExtras().getString("prenom"),
@@ -67,13 +69,21 @@ public class ModificationClient extends Activity implements OnClickListener{
 		initialiserActivite();
 	}//fin onCreate
 
+	/**
+	 * Initialise le menu de l'activité
+	 * @param Le menu permettant d'initialiser celui de l'activité [Menu]
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.modification_client, menu);
 		return true;
 	}
-
+	
+	/**
+	 * Gère les clics sur les différents éléments du menu
+	 * @param L'élément du menu sur lequel l'utilisateur a cliqué [MenuItem]
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -86,33 +96,60 @@ public class ModificationClient extends Activity implements OnClickListener{
 		return super.onOptionsItemSelected(item);
 	}//fin onOptionsItemSelected
 	
+	/**
+	 * Gère les clics sur les différents boutons de l'application
+	 * @param L'élément sur lequel l'utilisateur a cliqué [View]
+	 */
 	@Override
 	public void onClick(View v) {
 		Log.d("Étape", "~ Click sur un bouton");
+		//On détecte sur quel bouton l'utilisateur a cliqué
 		switch (v.getId())
 		{
+			/* ~~~~~~~~~~~ *
+			 *  Bouton OK  *
+			 * ~~~~~~~~~~~ */
 			case R.id.btnOk:
 				Log.d("Étape", "~ Click sur Ok détecté");
 				try {
+					//On enregistre les modifications dans la bdd
 					enregistrerModifications();
 					Toast.makeText(this, "Modifications enregistrées !",Toast.LENGTH_SHORT).show();
+					
 					//On prépare le retour de l'activité
 					Intent returnIntent = new Intent();
+					
+					//On renseigne l'index (du client dans la liste) qui sera retourné pour pouvoir mettre à jour la liste des clients dans AfficheListeClient
 					returnIntent.putExtra("indexClient", indexClientDansListe);
+					
+					//On indique à l'activité appelante qu'on va lui retourner des données, et donc que l'activité s'est bien passée
 					setResult(RESULT_OK,returnIntent);
+					
+					//On termine l'activité ModificationClient
 					finish();
 				} catch (Exception ex) {
 					Toast.makeText(this, ex.getMessage(),Toast.LENGTH_SHORT).show();
 				}//fin catch
 				break;
+			/* ~~~~~~~~~~~~~~~~ *
+			 *  Bouton Annuler  *
+			 * ~~~~~~~~~~~~~~~~ */
 			case R.id.btnAnnuler:
-				finish();
+				Log.d("Étape", "~ Click sur Annuler détecté");
+				finish(); //On termine l'activité ModificationClient
 				break;
+			/* ~~~~~~~~~~~~~~~~ *
+			 *  Bouton Géoloc.  *
+			 * ~~~~~~~~~~~~~~~~ */
 			case R.id.btnGeoloc:
 				Log.d("Étape", "~ Click sur Géoloc. détecté");
+				
+				//On va lancer l'activité de géolocalisation
 				Intent theIntent = new Intent(this, ActivityGeolocalisation.class);
+				
+				//On passe en paramètre l'identifiant du client actuel pour pouvoir récupérer son adresse par la suite
 				theIntent.putExtra("identifiant", leClient.getIdentifiant());
-				this.startActivityForResult(theIntent,0);
+				this.startActivity(theIntent); //Lancement de l'activité Geolocalisation
 				break;
 		}//fin switch
 	}//fin onClick
@@ -125,11 +162,13 @@ public class ModificationClient extends Activity implements OnClickListener{
 	{
 		//On vérifie le bon format des données saisies
 		checkEditText();
+		
 		//On va modifier le client dans la base de données
 		Log.d("Étape", "~ Modification du client dans la base");
 		try {
 			bdd = new BdAdapter(this);
 			bdd.open();
+			//On met à jour le client à partir de l'objet qui a été modifié en fonctions des données saisies par l'utilisateur
 			bdd.updateClient(leClient.getIdentifiant(), leClient);
 			bdd.close();
 		} catch (Exception ex) {
@@ -193,28 +232,28 @@ public class ModificationClient extends Activity implements OnClickListener{
 	}//fin checkEditText
 	
 	/**
-	 * Vérifie si les "EditText"s sont vide.
+	 * Vérifie si les zones de saisies sont vide.
 	 * 
-	 * Dans le cas où l'une d'entre-elles serait vide, une exception est levée
+	 * Dans le cas où l'une d'entre-elles serait vide, une exception est levée.
 	 * @throws Une exception "emptyFieldError" [Exception]
 	 */
 	private void checkEditTextVide() throws Exception
 	{
-		//Si le champ Relevé est vide
+		//Si le champ "Relevé" est vide
 		if (editTextReleve.getText().equals(""))
 		{
 			Log.d("Étape", "~ Champ \"Relevé\" vide");
 			throw new Exception("Veuillez remplir le champ \"Relevé\" !", new Throwable("emptyFieldError"));
 		}//fin if
 			
-		//Si le champ Date est vide
+		//Si le champ "Date" est vide
 		if (editTextDateReleve.getText().equals(""))
 		{
 			Log.d("Étape", "~ Champ \"Date\" vide");
 			throw new Exception("Veuillez remplir le champ \"Date\" !", new Throwable("emptyFieldError"));
 		}//fin if
 			
-		//Si le champ Situation est vide
+		//Si le champ "Situation" est vide
 		if (editTextSituation.getText().equals(""))
 		{
 			Log.d("Étape", "~ Champ \"Situation\" vide");
@@ -228,6 +267,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 	 */
 	public void initialiserActivite()
 	{	
+		//On va initialiser les composants graphiques de l'activité
 		textViewIdentifiant			= (TextView) this.findViewById(R.id.txvIdentifiantValue);
 		textViewIdentite			= (TextView) this.findViewById(R.id.txvIdentiteValue);
 		textViewTelephone			= (TextView) this.findViewById(R.id.txvTelephone);
@@ -241,7 +281,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 		editTextDateReleve			= (EditText) this.findViewById(R.id.edtDateReleve);
 		editTextSituation			= (EditText) this.findViewById(R.id.edtSituation);
 		
-		
+		//On va remplir les zones de texte à partir des éléments du client
 		textViewIdentifiant			.setText(leClient.getIdentifiant());
 		textViewIdentite			.setText(leClient.getNom() + " " + leClient.getPrenom());
 		textViewTelephone			.setText(leClient.getTelephone());
@@ -252,8 +292,12 @@ public class ModificationClient extends Activity implements OnClickListener{
 		textViewAncienReleve		.setText(leClient.getAncienReleve().toString());
 		textViewDateAncienReleve	.setText(leClient.getDateAncienReleve());
 		
+		//On déclare les boutons
 		btnOk = (Button) this.findViewById(R.id.btnOk);
 		btnOk.setOnClickListener(this);
+		
+		btnAnnuler = (Button) this.findViewById(R.id.btnAnnuler);
+		btnAnnuler.setOnClickListener(this);
 		
 		btnGeoloc = (Button) this.findViewById(R.id.btnGeoloc);
 		btnGeoloc.setOnClickListener(this);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">EDF-Florian</string>
+    <string name="app_name">EDF - Gestion des Clients</string>
 
     <color name="Blanc">#FFFFFF</color>
 
@@ -17,8 +17,9 @@
     <string name="title_activity_import">Import</string>
     <string name="title_activity_import_donnees">ImportDonnees</string>
     <string name="title_activity_sauvegarde">Sauvegarde</string>
-    <string name="title_activity_affiche_liste_client">AfficheListeClient</string>
-    <string name="title_activity_modification_client">ModificationClient</string>
+    <string name="title_activity_affiche_liste_client">Liste des Clients</string>
+    <string name="title_activity_modification_client">Modification d\'un client</string>
+    <string name="title_activity_activity_geolocalisation">Plan</string>
 
     <!-- Valeurs pour l'activité ModificationClient -->
     <string name="modifClient_txvIdentifiant">Identifiant :</string>
@@ -34,6 +35,5 @@
     <string name="modifClient_btnGeoloc">Géoloc.</string>
     <string name="modifClient_btnOk">Ok</string>
     <string name="modifClient_btnAnnuler">Annuler</string>
-    <string name="title_activity_activity_geolocalisation">ActivityGeolocalisation</string>
 
 </resources>

@@ -23,6 +23,9 @@ public class MainActivity extends Activity implements OnClickListener {
 	private Button btnInitBdd;
 	private BdAdapter bdd;
 	
+	/**
+	 * Initialise l'activité
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +44,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		//testBd(); //==> TEST OK ! :)
 	}//fin onCreate
 
+	/**
+	 * Initialise le menu de l'activité
+	 * @param Le menu permettant d'initialiser celui de l'activité [Menu]
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -48,6 +55,10 @@ public class MainActivity extends Activity implements OnClickListener {
 		return true;
 	}//fin onCreateOptionsMenu
 
+	/**
+	 * Gère les clics sur les différents éléments du menu
+	 * @param L'élément du menu sur lequel l'utilisateur a cliqué [MenuItem]
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -60,24 +71,43 @@ public class MainActivity extends Activity implements OnClickListener {
 		return super.onOptionsItemSelected(item);
 	}//fin onOptionsItemSelected
 	
+	/**
+	 * Gère les clics sur les différents boutons-image de l'application
+	 * @param L'élément sur lequel l'utilisateur a cliqué [View]
+	 */
 	@Override
 	public void onClick(View v)
 	{
 		Log.d("Étape", "~ Click sur une image !");
 		switch (v.getId())
 		{
+			/* ~~~~~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton Identification  *
+			 * ~~~~~~~~~~~~~~~~~~~~~~~ */
 		 	case R.id.imgVIdentification:
 		 		theIntent = new Intent(this, LayoutIdentification.class);
 		 		break;
+		 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton Clients - Relevé Compteur  *
+			 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 		 	case R.id.imgVClients:
 		 		theIntent = new Intent(this, AfficheListeClient.class);
 		 		break;
+		 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton Import de données  *
+			 * ~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 		 	case R.id.imgVImport:
 		 		theIntent = new Intent(this, LayoutImport.class);
 		 		break;
+		 	/* ~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton Sauvegarde  *
+			 * ~~~~~~~~~~~~~~~~~~~ */
 		 	case R.id.imgVSave:
 		 		theIntent = new Intent(this, LayoutSauvegarde.class);
 		 		break;
+		 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton Initialiser la BDD  *
+			 * ~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 		 	case R.id.btnInitBdd:
 		 		bdd = new BdAdapter(this);
 		 		bdd.open();
@@ -96,12 +126,16 @@ public class MainActivity extends Activity implements OnClickListener {
 		 			Toast.makeText(this, "Impossible d'insérer les nouveaux clients !", Toast.LENGTH_SHORT).show();
 		 		}//fin catch
 		 		break;
+		 	/* ~~~~~~~~~ *
+			 *  Default  *
+			 * ~~~~~~~~~ */
 		 	default :
 		 		Log.d("", "Erreur dans le switch du onClick de imageclick");
 		}//fin switch.
-		if(v.getId() != R.id.btnInitBdd)
-			this.startActivityForResult(theIntent, 0); //lancement de l'activité
 		
+		//Si l'utilisateur a cliqué sur un bouton-image et non le bouton "Initialiser la BDD", on va lancer l'activité
+		if(v.getId() != R.id.btnInitBdd)
+			this.startActivity(theIntent); //lancement de l'activité
 	}//fin onClick
 	
 	/**

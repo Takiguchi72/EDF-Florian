@@ -1,7 +1,6 @@
 package org.btssio.edf_florian;
 
 import java.util.List;
-
 import classes.Client;
 import dao.BdAdapter;
 import dao.ClientAdapter;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class AfficheListeClient extends Activity implements OnItemClickListener {
 	private ListView listView;
@@ -23,6 +21,9 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	private BdAdapter bdd;
 	private Intent theIntent;
 	
+	/**
+	 * Initialise l'activité
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -54,6 +55,10 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		listView.setAdapter(clientAdapter);
 	}//fin onCreate
 
+	/**
+	 * Initialise le menu de l'activité
+	 * @param Le menu permettant d'initialiser celui de l'activité [Menu]
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -61,6 +66,10 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		return true;
 	}//fin onCreateOptionsMenu
 
+	/**
+	 * Gère les clics sur les différents éléments du menu
+	 * @param L'élément du menu sur lequel l'utilisateur a cliqué [MenuItem]
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -73,28 +82,45 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		return super.onOptionsItemSelected(item);
 	}//fin onOptionsItemSelected
 	
+	/**
+	 * Vérifie que l'activité "ModificationClient" a bien retourné des valeurs, si c'est la cas, la fonction va mettre à jour la liste des clients de l'activité
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		//On récupère la réponse à la question posée, et on le stoque dans la variable reponses[numQuestion]
-		//reponses[data.getExtras().getInt("Numero")] = data.getExtras().getBoolean("Reponse");
-		int indexClient = data.getExtras().getInt("indexClient");
+		//Si l'activité s'est bien terminée, et a bien retourné des données via "data"
+		if(resultCode == RESULT_OK)
+		{
+			Log.d("Étape", "~ L'activité \"ModificationClient\" a bien retourné un résultat");
+			//On récupère l'index du client dans la liste
+			int indexClient = data.getExtras().getInt("indexClient");
 		
-		bdd.open();
-		Client clientAModifier = bdd.getClientWithIdentifiant(listeClient.get(indexClient).getIdentifiant());
-		bdd.close();
-		
-		listeClient.get(indexClient).setAncienReleve(clientAModifier.getAncienReleve());
-		listeClient.get(indexClient).setDateAncienReleve(clientAModifier.getDateAncienReleve());
-		listeClient.get(indexClient).setSituation(clientAModifier.getSituation());
-		
+			Log.d("Étape", "~ On récupère le Client dans la bdd via son identifiant");
+			//Puis on récupère le client à modifier dans la bdd
+			bdd.open();
+			Client clientAModifier = bdd.getClientWithIdentifiant(listeClient.get(indexClient).getIdentifiant());
+			bdd.close();
+			
+			Log.d("Étape", "~ On met à jour les données du client");
+			//On met à jour les données du client dans la liste au cas où l'utilisateur reclique dessus pour voir si les modifs ont été prises en compte par exemple.
+			listeClient.get(indexClient).setAncienReleve(clientAModifier.getAncienReleve());
+			listeClient.get(indexClient).setDateAncienReleve(clientAModifier.getDateAncienReleve());
+			listeClient.get(indexClient).setSituation(clientAModifier.getSituation());
+		}//fin if
 	}//fin onActivityResult
 	
+	/**
+	 * Gère le clic sur les clients
+	 * @param AdapterView<?> a
+	 * @param L'élément sur lequel l'utilisateur a cliqué [View]
+	 * @param L'index de l'élément cliqué dans la liste [int]
+	 * @param long id
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> a, View v, int position, long id)
 	{
 		Log.d("Étape", "~ Clic sur le " + position + "° item de la ListView");
-		Toast.makeText(getApplicationContext(),"Choix : " + listeClient.get(position).getIdentifiant(), Toast.LENGTH_SHORT).show();
 		theIntent = new Intent(this, ModificationClient.class);
+		
 		//On va passer des paramètres à l'activité que l'on va lancer
 		theIntent.putExtra("identifiant",			listeClient.get(position).getIdentifiant());
 		theIntent.putExtra("nom",					listeClient.get(position).getNom());
@@ -111,6 +137,7 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		theIntent.putExtra("dernierReleve", 		listeClient.get(position).getDernierReleve());
 		theIntent.putExtra("situation", 			listeClient.get(position).getSituation());
 		
+		//On retourne la position du client dans la liste pour le retour de l'activité
 		theIntent.putExtra("indexClient", 			position);
 		//Lancement de l'activité
 		this.startActivityForResult(theIntent,0);
