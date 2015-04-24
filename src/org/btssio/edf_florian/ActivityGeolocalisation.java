@@ -106,7 +106,7 @@ public class ActivityGeolocalisation extends Activity implements LocationListene
 		if (provider == null || provider.equals(""))
 		{
 			Log.d("Étape", "~ Echec de l'utilisation du service de géolocalisation (Est-il activé ?)");
-			Toast.makeText(this, "Veuillez activer le service de géolocalisation svp !",Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Erreur",Toast.LENGTH_LONG).show();
 		}//fin if
 	}//fin recupPositionAgent
 	
@@ -125,8 +125,8 @@ public class ActivityGeolocalisation extends Activity implements LocationListene
 		}//fin if
 		else
 		{
-			Log.d("Étape", "~ Impossible de récupérer la position de l'agent !");
-			Toast.makeText(this, "Impossible de récupérer votre position !",Toast.LENGTH_LONG).show();
+			Log.d("Étape", "~ Service de géolocalisation désactivé");
+			Toast.makeText(this, "Veuillez activer le service de géolocalisation svp !",Toast.LENGTH_LONG).show();
 		}//fin else
 		
 		//On génère la localisation du client à partir de son adresse
@@ -135,16 +135,16 @@ public class ActivityGeolocalisation extends Activity implements LocationListene
 		try {
 			locations = fwdGeocoder.getFromLocationName(adresseClient, 10);
 		} catch (IOException e) {
-			Log.d("Étape", "~ Impossible de générer la localisation du Client !");
-			Toast.makeText(this, "Impossible de générer la localisation du Client !",Toast.LENGTH_LONG).show();
+			Log.d("Étape", "~ Services de données mobiles désactivé");
+			Toast.makeText(this, "Veuillez activer le services de données mobiles svp !",Toast.LENGTH_LONG).show();
 		}//fin catch
 		
 		//Si on a pas réussi à récupérer la localisation du client, on affiche qu'il est inconnu sur la carte
 		if ((locations == null) || (locations.isEmpty()))
 		{
 			//"Adresse client inconnu !"
-			Log.d("Étape", "~ L'adresse du client est inconnue !");
-			Toast.makeText(this, "L'adresse du client est inconnue !",Toast.LENGTH_LONG).show();
+			Log.d("Étape", "~ Localisation du client impossible");
+			Toast.makeText(this, "Impossible de localiser le client !",Toast.LENGTH_LONG).show();
 		}//fin if
 		//Sinon, on va enregistrer sa localisation
 		else
