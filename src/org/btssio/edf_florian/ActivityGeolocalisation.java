@@ -1,14 +1,11 @@
 package org.btssio.edf_florian;
 
-import org.btssio.edf_florian.R;
 import android.app.Activity;
-import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class ActivityGeolocalisation extends Activity implements LocationListener{
+public class ActivityGeolocalisation extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,29 +30,5 @@ public class ActivityGeolocalisation extends Activity implements LocationListene
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
 	}
 }

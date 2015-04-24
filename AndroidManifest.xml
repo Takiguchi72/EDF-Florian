@@ -7,11 +7,12 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="21" />
-	<permission
+
+    <permission
         android:name="org.btssio.edf_florian.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-	
-	<uses-permission android:name="org.btssio.edf_florian.permission.MAPS_RECEIVE" />
+
+    <uses-permission android:name="org.btssio.edf_florian.permission.MAPS_RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -23,7 +24,7 @@
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-    
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -66,12 +67,18 @@
             android:name=".ModificationClient"
             android:label="@string/title_activity_modification_client" >
         </activity>
+
+        <activity
+            android:name=".ActivityGeolocalisation"
+            android:label="@string/title_activity_activity_geolocalisation" >
+        </activity>
         <meta-data
-			android:name="com.google.android.maps.v2.API_KEY"
-			android:value="AIzaSyB1lTanACULGkqRpaB4D3Ztd5d_9X_L2Yk" />
-		<meta-data
-			android:name="com.google.android.gms.version"
-			android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyB1lTanACULGkqRpaB4D3Ztd5d_9X_L2Yk" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
     </application>
 
 </manifest>
