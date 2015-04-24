@@ -67,11 +67,11 @@
             android:name=".ModificationClient"
             android:label="@string/title_activity_modification_client" >
         </activity>
-
         <activity
             android:name=".ActivityGeolocalisation"
             android:label="@string/title_activity_activity_geolocalisation" >
         </activity>
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyB1lTanACULGkqRpaB4D3Ztd5d_9X_L2Yk" />
@@ -79,6 +79,14 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity
+            android:name=".CaptureSignture"
+            android:label="@string/title_activity_capture_signture" >
+        </activity>
+        <activity
+            android:name=".AfficheSignature"
+            android:label="@string/title_activity_affiche_signature" >
+        </activity>
     </application>
 
 </manifest>

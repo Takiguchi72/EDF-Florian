@@ -32,6 +32,8 @@ public class ModificationClient extends Activity implements OnClickListener{
 	private EditText editTextDateReleve;
 	private EditText editTextSituation;
 	private BdAdapter bdd;
+	private Button btnFaireSigner;
+	private Button btnVoirSignature;
 	private Button btnOk;
 	private Button btnAnnuler;
 	private Button btnGeoloc;
@@ -106,6 +108,37 @@ public class ModificationClient extends Activity implements OnClickListener{
 		//On détecte sur quel bouton l'utilisateur a cliqué
 		switch (v.getId())
 		{
+			/* ~~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton FaireSigner  *
+			 * ~~~~~~~~~~~~~~~~~~~~ */
+			case R.id.btnFaireSigner:
+				Log.d("Étape", "~ Click sur Faire signer le client détecté");
+				//On va lancer l'activité de signature du client
+				Intent intentSignature = new Intent(this, CaptureSignture.class);
+				
+				//On va renseigner l'identifiant du client en paramètre
+				intentSignature.putExtra("identifiant", leClient.getIdentifiant());
+				//On lance l'activité
+				this.startActivityForResult(intentSignature, 0);
+				break;
+			/* ~~~~~~~~~~~~~~~~~~~~~~ *
+			 *  Bouton VoirSignature  *
+			 * ~~~~~~~~~~~~~~~~~~~~~~ */
+			case R.id.btnVoirSignature:
+				Log.d("Étape", "~ Click sur Voir la signature du client détecté");
+				//On vérifie que l'utilisateur a une signature dans la bdd
+				if(leClient.getSignatureBase64().length() > 0)
+				{
+					//On va afficher la signature du client
+					Intent intentVoirSignature = new Intent(this, AfficheSignature.class);
+					
+					//En passant à la nouvelle activity l'identifiant du client
+					intentVoirSignature.putExtra("identifiant", leClient.getIdentifiant());
+					
+					//On lance l'activity
+					this.startActivity(intentVoirSignature);
+				}//fin if
+				break;
 			/* ~~~~~~~~~~~ *
 			 *  Bouton OK  *
 			 * ~~~~~~~~~~~ */
@@ -134,7 +167,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 			/* ~~~~~~~~~~~~~~~~ *
 			 *  Bouton Annuler  *
 			 * ~~~~~~~~~~~~~~~~ */
-			case R.id.btnAnnuler:
+			case R.id.capt_sign_btnAnnuler:
 				Log.d("Étape", "~ Click sur Annuler détecté");
 				finish(); //On termine l'activité ModificationClient
 				break;
@@ -293,13 +326,19 @@ public class ModificationClient extends Activity implements OnClickListener{
 		textViewDateAncienReleve	.setText(leClient.getDateAncienReleve());
 		
 		//On déclare les boutons
-		btnOk = (Button) this.findViewById(R.id.btnOk);
-		btnOk.setOnClickListener(this);
+		btnFaireSigner				= (Button) this.findViewById(R.id.btnFaireSigner);
+		btnFaireSigner				.setOnClickListener(this);
 		
-		btnAnnuler = (Button) this.findViewById(R.id.btnAnnuler);
-		btnAnnuler.setOnClickListener(this);
+		btnVoirSignature			= (Button) this.findViewById(R.id.btnVoirSignature);
+		btnVoirSignature			.setOnClickListener(this);
 		
-		btnGeoloc = (Button) this.findViewById(R.id.btnGeoloc);
-		btnGeoloc.setOnClickListener(this);
+		btnOk						= (Button) this.findViewById(R.id.btnOk);
+		btnOk						.setOnClickListener(this);
+		
+		btnAnnuler					= (Button) this.findViewById(R.id.capt_sign_btnAnnuler);
+		btnAnnuler					.setOnClickListener(this);
+		
+		btnGeoloc					= (Button) this.findViewById(R.id.btnGeoloc);
+		btnGeoloc					.setOnClickListener(this);
 	}//fin initialiserActivite
 }//fin classe

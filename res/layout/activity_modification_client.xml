@@ -135,7 +135,7 @@
                 android:layout_marginTop="20dp" >
 
                 <TextView
-                    android:id="@+id/txvCompteur"
+                    android:id="@+id/txvDetailsCompteur"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/modifClient_txvCompteur" />
@@ -255,6 +255,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" >
+
+            <Button
+                android:id="@+id/btnFaireSigner"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:text="@string/modifClient_btnFaireSigner" />
+
+            <Button
+                android:id="@+id/btnVoirSignature"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-9dp"
+                android:text="@string/modifClient_btnVoirSignature" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp" >
 
             <Button
@@ -272,11 +296,10 @@
                 android:text="@string/modifClient_btnOk" />
 
             <Button
-                android:id="@+id/btnAnnuler"
+                android:id="@+id/capt_sign_btnAnnuler"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/modifClient_btnAnnuler" />
-
         </LinearLayout>
 
     </LinearLayout>

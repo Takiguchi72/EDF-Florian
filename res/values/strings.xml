@@ -35,5 +35,14 @@
     <string name="modifClient_btnGeoloc">Géoloc.</string>
     <string name="modifClient_btnOk">Ok</string>
     <string name="modifClient_btnAnnuler">Annuler</string>
+    <string name="title_activity_capture_signture">CaptureSignture</string>
+    <string name="title_activity_affiche_signature">AfficheSignature</string>
+    
+    <string name="modifClient_btnFaireSigner">Faire signer le client</string>
+    <string name="modifClient_btnVoirSignature">Voir la signature du client</string>
+    
+    
+    <string name="capt_sign_btnEffacer">Effacer</string>
+    <string name="capt_sign_btnSauvegarder">Sauvegarder</string>
 
 </resources>
