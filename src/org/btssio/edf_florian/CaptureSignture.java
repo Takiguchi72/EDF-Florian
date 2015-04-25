@@ -58,6 +58,7 @@ public class CaptureSignture extends Activity implements OnClickListener{
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
+			
 			paint.setStyle(Paint.Style.FILL);
 			canvas.drawText(lig1, 20, 30, paint);
 			canvas.drawText(lig2, 20, 60, paint);
@@ -91,7 +92,8 @@ public class CaptureSignture extends Activity implements OnClickListener{
 		
 		public void reinitialiser()
 		{
-			path.reset();invalidate();
+			path.reset();
+			invalidate();
 			btnSauvegarder.setEnabled(false);
 		}//fin reinitialiser
 		
@@ -203,13 +205,8 @@ public class CaptureSignture extends Activity implements OnClickListener{
 				BdAdapter bdd = new BdAdapter(this);
 				bdd.open();
 				bdd.updateClient(leClient.getIdentifiant(), leClient);
-				
-				Client verif = bdd.getClientWithIdentifiant(leClient.getIdentifiant());
-				if(signature.save().equals(verif.getSignatureBase64()))
-					Log.d("Signature", "Les signatures sont identiques");
-				else
-					Log.d("Signature", "ERREUR - Signatures différentes");
 				bdd.close();
+				
 				
 				Intent returnIntent = new Intent();
 				//On indique à l'activité appelante qu'on va lui retourner des données, et donc que l'activité s'est bien passée

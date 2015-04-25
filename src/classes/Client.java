@@ -169,6 +169,39 @@ public class Client {
 		situation = 0;
 	}//fin Client(...)
 	
+	/**
+	 * Constructeur où il faut saisir les attributs non modifiables. Les attributs modifiables seront initialisés à { 0 ; 0.0 ; "" }.
+	 * @param identifiant [String]
+	 * @param nom [String]
+	 * @param prenom [String]
+	 * @param adresse [String]
+	 * @param codePostal [String]
+	 * @param ville [String]
+	 * @param telephone [String]
+	 * @param idCompteur [String]
+	 * @param dateAncienReleve [String]
+	 * @param ancienReleve [Double]
+	 */
+	public Client(String identifiant, String nom, String prenom,
+			String adresse, String codePostal, String ville, String telephone,
+			String idCompteur, String dateAncienReleve, Double ancienReleve, String signatureBase64) 
+	{
+		this.identifiant = identifiant;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.adresse = adresse;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.telephone = telephone;
+		this.idCompteur = idCompteur;
+		this.dateAncienReleve = dateAncienReleve;
+		this.ancienReleve = ancienReleve;
+		dernierReleve = 0.0;
+		dateDernierReleve = getDateDuJour();
+		this.signatureBase64=signatureBase64;
+		situation = 0;
+	}//fin Client(...)
+	
 	/* *******************
 	 *  M E T H O D E S  *
 	 *********************/

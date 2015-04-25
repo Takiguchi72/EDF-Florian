@@ -2,14 +2,12 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import classes.Client;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
+import classes.Client;
 
 public class BdAdapter {
 	/* *********************
@@ -138,7 +136,8 @@ public class BdAdapter {
 										c.getString(NUM_COL_TEL),
 										c.getString(NUM_COL_IDCOMPTEUR),
 										c.getString(NUM_COL_DATEANCIENRELEVE),
-										c.getDouble(NUM_COL_ANCIENRELEVE));
+										c.getDouble(NUM_COL_ANCIENRELEVE),
+										c.getString(NUM_COL_SIGNATUREBASE64));
 		//On ferme le cursor
 		c.close();
 		//On retourne le client
@@ -160,7 +159,11 @@ public class BdAdapter {
 											COL_TEL,
 											COL_IDCOMPTEUR,
 											COL_DATEANCIENRELEVE,
-											COL_ANCIENRELEVE},
+											COL_ANCIENRELEVE,
+											COL_DATEDERNIERRELEVE,
+											COL_SIGNATUREBASE64,
+											COL_DERNIERRELEVE,
+											COL_SITUATION},
 							COL_ID + " LIKE \"" + identifiant + "\"",
 							null, null, null, null);
 		return cursorToClient(c);
@@ -230,7 +233,8 @@ public class BdAdapter {
 											c.getString(NUM_COL_TEL),
 											c.getString(NUM_COL_IDCOMPTEUR),
 											c.getString(NUM_COL_DATEANCIENRELEVE),
-											c.getDouble(NUM_COL_ANCIENRELEVE)));
+											c.getDouble(NUM_COL_ANCIENRELEVE),
+											c.getString(NUM_COL_SIGNATUREBASE64)));
 		} while (c.moveToNext());
 		//On ferme le curseur pour éviter les soucis
 		c.close();

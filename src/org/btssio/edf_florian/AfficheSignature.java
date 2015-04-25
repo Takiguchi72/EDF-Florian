@@ -39,26 +39,16 @@ public class AfficheSignature extends Activity implements OnClickListener{
 		private Bitmap bitmap;
 		private String lig1, lig2;
 		
-		public Signature(Context context, AttributeSet attrs, String lig1, String lig2) {
+		public Signature(Context context, AttributeSet attrs) {
 			super(context, attrs);
 			this.setBackgroundColor(Color.WHITE);
-			paint.setAntiAlias(true); // empêche le scintillement gourmand en cpu et mémoire 
-			paint.setColor(Color.BLACK);
-			paint.setStrokeWidth(5f); //taille de la grosseur du trait en pixel
-			paint.setTextSize(20);// taille du texte pur afficher les lignes
-			this.lig1 = lig1;
-			this.lig2 = lig2;
 		}
 
 		//gestion du dessin
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
-			paint.setStyle(Paint.Style.FILL);
-			canvas.drawText(lig1, 20, 30, paint);
-			canvas.drawText(lig2, 20, 60, paint);
-			paint.setStyle(Paint.Style.STROKE);
-			canvas.drawPath(path, paint);
+			canvas.drawBitmap(bitmap, 0, 0, null);
 		}
 		
 		public void reinitialiser()
@@ -90,18 +80,14 @@ public class AfficheSignature extends Activity implements OnClickListener{
 		
 		Log.d("Étape", "~ Récupération du client depuis la bdd");
 		//On récupère le client
-		BdAdapter bdd = new BdAdapter(this);
-		bdd.open();
+		BdAdapter bdd = new BdAdapter(this).open();
 		leClient = bdd.getClientWithIdentifiant(this.getIntent().getExtras().getString("identifiant"));
 		bdd.close();
 		Log.d("Étape", "~ Client récupéré !");
 		
-		//On va initialiser les textview à partir des données du client
-		String lig1 = "Client : " + leClient.getIdentifiant() + " - " + leClient.getNom() + " " + leClient.getPrenom();
-		String lig2 = "Compteur : " + leClient.getIdCompteur() + " - Relevé : " + leClient.getDernierReleve() + " - Date : " + leClient.getDateDernierReleve();
 		
 		Log.d("Étape", "~ Création de la signature");
-		signature = new Signature(this, null,lig1,lig2);
+		signature = new Signature(this, null);
 		
 		linearLayout = (LinearLayout) this.findViewById(R.id.aff_sign_lytDessin);
 		
@@ -135,7 +121,9 @@ public class AfficheSignature extends Activity implements OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		
+		if(v.getId() == R.id.aff_sign_btnRetour)
+		{
+			finish();
+		}
 	}
 }

@@ -127,7 +127,8 @@ public class ModificationClient extends Activity implements OnClickListener{
 			case R.id.btnVoirSignature:
 				Log.d("Étape", "~ Click sur Voir la signature du client détecté");
 				//On vérifie que l'utilisateur a une signature dans la bdd
-				if(leClient.getSignatureBase64().length() > 0)
+//				if(leClient.getSignatureBase64().length() > 0)
+				if(!leClient.getSignatureBase64().equals(""))
 				{
 					//On va afficher la signature du client
 					Intent intentVoirSignature = new Intent(this, AfficheSignature.class);
@@ -202,7 +203,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 			//Puis on récupère le client à modifier dans la bdd
 			bdd = new BdAdapter(this);
 			bdd.open();
-			leClient = bdd.getClientWithIdentifiant(leClient.getIdentifiant());
+			leClient.setSignatureBase64(bdd.getClientWithIdentifiant(leClient.getIdentifiant()).getSignatureBase64());
 			bdd.close();
 			
 		}//fin if
