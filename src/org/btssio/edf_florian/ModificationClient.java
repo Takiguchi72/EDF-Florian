@@ -165,7 +165,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 					//On termine l'activité ModificationClient
 					finish();
 				} catch (Exception ex) {
-					Toast.makeText(this, ex.getMessage(),Toast.LENGTH_SHORT).show();
+					Toast.makeText(this, ex.getMessage(),Toast.LENGTH_LONG).show();
 				}//fin catch
 				break;
 			/* ~~~~~~~~~~~~~~~~ *
@@ -199,6 +199,9 @@ public class ModificationClient extends Activity implements OnClickListener{
 		}//fin switch
 	}//fin onClick
 	
+	/**
+	 * Vérifie que l'activité "CaptureSignature" a bien retourné des valeurs, si c'est la cas, la fonction va mettre à jour le client de l'activité en fonction de la signature retournée
+	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//Si l'activité s'est bien terminée, et a bien retourné des données via "data"
@@ -296,10 +299,26 @@ public class ModificationClient extends Activity implements OnClickListener{
 				Log.d("Étape", "~ Situation incorrecte");
 				throw new Exception("La situation ne doit pas être 0", new Throwable("situation0Error"));
 			}//fin if
+			
+			//On vérifie que la situation est bien positive
+			if (intSituation < 0)
+			{
+				Log.d("Étape", "~ Situation incorrecte");
+				throw new Exception("La situation ne doit pas être inférieur à 0", new Throwable("situationInferieure"));
+			}//fin if
 		} catch (Exception ex) {
 			Log.d("Étape", "~ Situation incorrecte");
-			throw new Exception("Veuillez saisir un nombre entier dans le champ \"Situation\"", new Throwable("castError"));
+			throw new Exception("Veuillez saisir un nombre entier supérieur à 0 dans le champ \"Situation\"", new Throwable("castError"));
 		}//fin catch
+		
+		//On va tester si le relevé est bien supérieur à l'ancien, excepté si la situation est 1, 5 ou 6
+		if(intSituation != 1 && intSituation != 5 && intSituation != 6)
+		{
+			if(doubleReleve < leClient.getAncienReleve())
+			{
+				throw new Exception("En vue de la situation du client, son nouveau relevé ne peut être inférieur à l'ancien !", new Throwable("releveInferieur"));
+			}//fin if
+		}//fin if
 		
 		Log.d("Étape", "~ Modification du client");
 		//On modifie le client s'il n'y a pas eu d'exception de levée
@@ -370,19 +389,19 @@ public class ModificationClient extends Activity implements OnClickListener{
 		textViewDateAncienReleve	.setText(leClient.getDateAncienReleve());
 		
 		//On déclare les boutons
-		btnFaireSigner				= (Button) this.findViewById(R.id.btnFaireSigner);
-		btnFaireSigner				.setOnClickListener(this);
+		btnFaireSigner		= (Button) this.findViewById(R.id.btnFaireSigner);
+		btnFaireSigner		.setOnClickListener(this);
 		
-		btnVoirSignature			= (Button) this.findViewById(R.id.btnVoirSignature);
-		btnVoirSignature			.setOnClickListener(this);
+		btnVoirSignature	= (Button) this.findViewById(R.id.btnVoirSignature);
+		btnVoirSignature	.setOnClickListener(this);
 		
-		btnOk						= (Button) this.findViewById(R.id.btnOk);
-		btnOk						.setOnClickListener(this);
+		btnOk				= (Button) this.findViewById(R.id.btnOk);
+		btnOk				.setOnClickListener(this);
 		
-		btnAnnuler					= (Button) this.findViewById(R.id.capt_sign_btnAnnuler);
-		btnAnnuler					.setOnClickListener(this);
+		btnAnnuler			= (Button) this.findViewById(R.id.capt_sign_btnAnnuler);
+		btnAnnuler			.setOnClickListener(this);
 		
-		btnGeoloc					= (Button) this.findViewById(R.id.btnGeoloc);
-		btnGeoloc					.setOnClickListener(this);
+		btnGeoloc			= (Button) this.findViewById(R.id.btnGeoloc);
+		btnGeoloc			.setOnClickListener(this);
 	}//fin initialiserActivite
 }//fin classe

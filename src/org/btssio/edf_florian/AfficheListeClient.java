@@ -87,28 +87,25 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		//Si l'activité s'est bien terminée, et a bien retourné des données via "data"
-		if(resultCode == RESULT_OK)
+		//On rafraichit la liste des clients
+		Log.d("Étape", "~ L'activité \"ModificationClient\" a bien retourné un résultat");
+
+		//On vide la liste de clients
+		for(int i = 0 ; i < listeClient.size() ; i++)
 		{
-			Log.d("Étape", "~ L'activité \"ModificationClient\" a bien retourné un résultat");
-			
-			//On vide la liste de clients
-			for(int i = 0 ; i < listeClient.size() ; i++)
-			{
-				listeClient.remove(i);
-			}//fin for
-			
-			//On récupère tous les clients à partir de la bdd
-			bdd = new BdAdapter(this);
-			bdd.open();
-			listeClient = bdd.getListeDesClients();
-			bdd.close();
-			
-			//On met à jour la liste des clients
-			ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
-			listView.setOnItemClickListener(this) ;
-			listView.setAdapter(clientAdapter);
-		}//fin if
+			listeClient.remove(i);
+		}//fin for
+
+		//On récupère tous les clients à partir de la bdd
+		bdd = new BdAdapter(this);
+		bdd.open();
+		listeClient = bdd.getListeDesClients();
+		bdd.close();
+
+		//On met à jour la liste des clients
+		ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
+		listView.setOnItemClickListener(this) ;
+		listView.setAdapter(clientAdapter);
 	}//fin onActivityResult
 	
 	/**
