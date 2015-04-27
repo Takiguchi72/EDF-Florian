@@ -27,6 +27,9 @@ import classes.Client;
 import dao.BdAdapter;
 
 public class CaptureSignture extends Activity implements OnClickListener{
+	/* **********************************
+	 * A T T R I B U T S
+	 * ******************************* */
 	private Client leClient;
 	private LinearLayout linearLayout;
 	private Button btnAnnuler;
@@ -35,14 +38,26 @@ public class CaptureSignture extends Activity implements OnClickListener{
 	private Signature signature;
 	
 	public class Signature extends View {
-		// variables nécessaire au dessin
-
+		/* ********* *
+		 * Attributs *
+		 * ********* */
 		private Paint paint = new Paint();
 		private Path path = new Path();// collection de l'ensemble des points sauvegardés lors des mouvements du doigt
 		private Canvas canvas;
 		private Bitmap bitmap;
 		private String lig1, lig2;
 		
+		
+		/* ************ *
+		 * Constructeur *
+		 * ************ */
+		/**
+		 * Constructeur par défaut
+		 * @param context
+		 * @param attrs
+		 * @param Le récapitulatif du client. Ex: "Client : cli1 Nom Prénom" [String]
+		 * @param Le récapitulatif du relevé du client. Ex: "Compteur n°0123456789 - Relevé : 1234.56 - Date : 01/02/03" [String]
+		 */
 		public Signature(Context context, AttributeSet attrs, String lig1, String lig2) {
 			super(context, attrs);
 			this.setBackgroundColor(Color.WHITE);
@@ -52,36 +67,59 @@ public class CaptureSignture extends Activity implements OnClickListener{
 			paint.setTextSize(20);// taille du texte pur afficher les lignes
 			this.lig1 = lig1;
 			this.lig2 = lig2;
-		}
+		}//fin constructeur
 
-		//gestion du dessin
+		/* ******** *
+		 * Méthodes *
+		 * ******** */
+		/**
+		 * Affiche le dessin en fonction du tracé de l'utilisateur
+		 * @param Le canvas sur lequel l'utilisateur dessine [Canvas]
+		 */
 		@Override
 		protected void onDraw(Canvas canvas) {
 			super.onDraw(canvas);
 			
+			//On affiche le dessin en fonction du tracé de l'utilisateur
 			paint.setStyle(Paint.Style.FILL);
 			canvas.drawText(lig1, 20, 30, paint);
 			canvas.drawText(lig2, 20, 60, paint);
 			paint.setStyle(Paint.Style.STROKE);
 			canvas.drawPath(path, paint);
-		}
-		// gestion des événements du doigt
+		}//fin onDraw
+		
+		/**
+		 * Gère les évènements générés par le doigt sur la zone de dessin
+		 * @param L'évènement capté
+		 */
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
 			//On rend accessible le bouton Sauvegarder
 			btnSauvegarder.setEnabled(true);
 			
+			//On récupère les coordonnées du doigt sur le dessin
 			float eventX = event.getX();
 			float eventY = event.getY();
+			
+			//En fonction de l'action (touche l'écran ; bouge le doigt ; relève le doigt ; etc...)
 			switch (event.getAction()) {
+				/* ~~~~~~~~~~~~~~~~ *
+				 *  Touche l'écran  *
+				 * ~~~~~~~~~~~~~~~~ */
 				case MotionEvent.ACTION_DOWN:
 					path.moveTo(eventX, eventY);
 					return true;
+				/* ~~~~~~~~~~~~~~~~ *
+				 *  Bouge le doigt  *
+				 * ~~~~~~~~~~~~~~~~ */
 				case MotionEvent.ACTION_MOVE:
 					path.lineTo(eventX, eventY);
 					break;
+				/* ~~~~~~~~~~~~~~~~~ *
+				 *  Relève le doigt  *
+				 * ~~~~~~~~~~~~~~~~~ */	
 				case MotionEvent.ACTION_UP:
-					// nothing to do
+					//On ne fait rien
 					break;
 				default:
 					return false;
@@ -90,6 +128,9 @@ public class CaptureSignture extends Activity implements OnClickListener{
 			return true;
 		}//fin onTouchEvent
 		
+		/**
+		 * Réinitialise la zone de dessin et désactive le bouton "Sauvegarder"
+		 */
 		public void reinitialiser()
 		{
 			path.reset();
@@ -97,9 +138,15 @@ public class CaptureSignture extends Activity implements OnClickListener{
 			btnSauvegarder.setEnabled(false);
 		}//fin reinitialiser
 		
+		/**
+		 * Retourne la signature sous la forme d'une chaîne de caractère correspondant à l'encodage en JPEG de la signature
+		 * @return La signature encodé en JPEG sous forme de chaîne de caractères [String]
+		 */
 		public String save()
 		{
 			String vretour;
+			
+			//Si le bitmap est vide, on va le créer en spécifiant ses dimensions
 			if (bitmap == null)
 			{
 				bitmap = Bitmap.createBitmap(this.getWidth(), this.getHeight(),
@@ -107,22 +154,31 @@ public class CaptureSignture extends Activity implements OnClickListener{
 			}//fin if
 			
 			try {
+				//On récupère la signature dessinée
 				canvas = new Canvas(bitmap);
 				this.draw(canvas);
+				
+				//On spécifie l'image en JPEG, et on l'encore en base 64 
 				ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
 				bitmap.compress(Bitmap.CompressFormat.JPEG, 100, ByteStream);
 				byte[] b = ByteStream.toByteArray();
 				vretour = Base64.encodeToString(b, Base64.DEFAULT);
-
 			} catch (Exception e) {
 				Toast.makeText(getApplicationContext(), "Erreur Sauvegarde", Toast.LENGTH_LONG).show();
 				vretour = null;
 			}//fin catch
+			
 			Log.d("Signature", vretour);
 			return vretour;
 		}//fin save
 	}//fin Signature
 	
+	/* **********************************
+	 * M É T H O D E S
+	 * ******************************* */
+	/**
+	 * Initialise l'activité
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -134,6 +190,7 @@ public class CaptureSignture extends Activity implements OnClickListener{
 		bdd.open();
 		leClient = bdd.getClientWithIdentifiant(this.getIntent().getExtras().getString("identifiant"));
 		bdd.close();
+		
 		Log.d("Étape", "~ Client récupéré !");
 		//On va initialiser les textview à partir des données du client
 		String lig1 = "Client : " + leClient.getIdentifiant() + " - " + leClient.getNom() + " " + leClient.getPrenom();
@@ -157,18 +214,24 @@ public class CaptureSignture extends Activity implements OnClickListener{
 		//On rend le bouton Sauvegarder innaccessible
 		btnSauvegarder.setEnabled(false);
 		
-		linearLayout.addView(signature, LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
-		
+		linearLayout.addView(signature, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 	}//fin onCreate
-
+	
+	/**
+	 * Initialise le menu de l'activité
+	 * @param Le menu permettant d'initialiser celui de l'activité [Menu]
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.capture_signture, menu);
 		return true;
-	}
-
+	}//fin onCreateOptionsMenu
+	
+	/**
+	 * Gère les clics sur les différents éléments du menu
+	 * @param L'élément du menu sur lequel l'utilisateur a cliqué [MenuItem]
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -179,8 +242,12 @@ public class CaptureSignture extends Activity implements OnClickListener{
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}//fin onOptionsItemSelected
 
+	/**
+	 * Gère les clics sur les différents boutons de l'application
+	 * @param L'élément sur lequel l'utilisateur a cliqué [View]
+	 */
 	@Override
 	public void onClick(View v)
 	{
@@ -198,17 +265,11 @@ public class CaptureSignture extends Activity implements OnClickListener{
 				//Sur le clic du bouton save, appelez la méthode de Signature permettant de sauvegarder le dessin en String, 
 				//puis modifiez la variable signature_Base64 de l'objet client, 
 				//sauvegardez l'objet client et appelez finish()
-				Log.d("Étape", "~ Conversion de l'image en chaîne codée");
-				leClient.setSignatureBase64(signature.save());
-				
-				Log.d("Étape", "~ Enregistrement de la signature dans la bdd");
-				BdAdapter bdd = new BdAdapter(this);
-				bdd.open();
-				bdd.updateClient(leClient.getIdentifiant(), leClient);
-				bdd.close();
 				
 				
 				Intent returnIntent = new Intent();
+				
+				returnIntent.putExtra("signatureBase64", signature.save());
 				//On indique à l'activité appelante qu'on va lui retourner des données, et donc que l'activité s'est bien passée
 				setResult(RESULT_OK,returnIntent);
 				

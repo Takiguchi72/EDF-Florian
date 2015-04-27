@@ -13,12 +13,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="20dp"
         android:orientation="vertical" >
 
         <TableLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" >
+            android:layout_marginLeft="20dp" >
 
             <TableRow
                 android:id="@+id/tbrIdentifiant"
@@ -80,23 +81,30 @@
 
             </TableRow>
 
-            <TableRow
-                android:id="@+id/tbrAdresse"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp" >
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
                 <TextView
                     android:id="@+id/txvAdresse"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="60dp"
                     android:text="@string/modifClient_txvAdresse" />
 
-            </TableRow>
+            </LinearLayout>
 
-            <TableRow
-                android:id="@+id/tbrAdresseValue"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp" >
 
@@ -104,13 +112,13 @@
                     android:id="@+id/txvAdresseValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:text="1 rue pasteur" />
 
-            </TableRow>
+            </LinearLayout>
 
-            <TableRow
-                android:id="@+id/tbrCpVille"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp" >
 
@@ -118,15 +126,24 @@
                     android:id="@+id/txvCp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:text="01234" />
 
                 <TextView
                     android:id="@+id/txvVille"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
                     android:text="Ville" />
 
-            </TableRow>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp" >
 
             <TableRow
                 android:id="@+id/tbrCompteur"
@@ -145,7 +162,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="19950055123" />
-
             </TableRow>
 
             <TableRow
@@ -164,6 +180,7 @@
                     android:id="@+id/txvAncienReleveValue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:text="3461.35" />
 
             </TableRow>
@@ -185,7 +202,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="09/03/15" />
-
             </TableRow>
 
             <TableRow
@@ -204,11 +220,7 @@
                     android:id="@+id/edtReleve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ems="10" >
-
-                    <requestFocus />
-                </EditText>
-
+                    android:ems="10" />
             </TableRow>
 
             <TableRow
@@ -227,7 +239,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10" />
-
             </TableRow>
 
             <TableRow
@@ -246,9 +257,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="10" />
-
             </TableRow>
-
         </TableLayout>
 
         <LinearLayout

@@ -51,12 +51,10 @@ public class AfficheSignature extends Activity implements OnClickListener{
 			canvas.drawBitmap(bitmap, 0, 0, null);
 		}
 		
-		public void reinitialiser()
-		{
-			path.reset();invalidate();
-		}//fin reinitialiser
-		
-		
+		/**
+		 * Décode la signature qui est sous forme de chaîne codée en base 64 JPEG, en image pour pouvoir l'afficher à l'écran
+		 * @param La signature encodée [String]
+		 */
 		public void dessine(String encodedString) {
 			try {
 				byte[] encodeByte = Base64
@@ -73,40 +71,55 @@ public class AfficheSignature extends Activity implements OnClickListener{
 		}
 	}//fin Signature
 	
+	/* **********************************
+	 * M É T H O D E S
+	 * ******************************* */
+	/**
+	 * Initialise l'activité
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_affiche_signature);
 		
 		Log.d("Étape", "~ Récupération du client depuis la bdd");
-		//On récupère le client
+		//On récupère le client à partir de l'identifiant passé en paramètres via "ModificationClient"
 		BdAdapter bdd = new BdAdapter(this).open();
 		leClient = bdd.getClientWithIdentifiant(this.getIntent().getExtras().getString("identifiant"));
 		bdd.close();
 		Log.d("Étape", "~ Client récupéré !");
 		
-		
+		//On va initialiser la signature pour pouvoir l'afficher
 		Log.d("Étape", "~ Création de la signature");
 		signature = new Signature(this, null);
 		
+		//On initialise les composants de l'activité
 		linearLayout = (LinearLayout) this.findViewById(R.id.aff_sign_lytDessin);
-		
 		btnRetour = (Button) this.findViewById(R.id.aff_sign_btnRetour);
 		btnRetour.setOnClickListener(this);
 		
-		linearLayout.addView(signature, LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT);
+		//On affecte la signature au layout
+		linearLayout.addView(signature, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		
+		//Puis on affiche la signature
 		signature.dessine(leClient.getSignatureBase64());
-	}
+	}//fin onCreate
 
+	/**
+	 * Initialise le menu de l'activité
+	 * @param Le menu permettant d'initialiser celui de l'activité [Menu]
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.affiche_signature, menu);
 		return true;
-	}
+	}//fin onCreateOptionsMenu
 
+	/**
+	 * Gère les clics sur les différents éléments du menu
+	 * @param L'élément du menu sur lequel l'utilisateur a cliqué [MenuItem]
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -117,13 +130,19 @@ public class AfficheSignature extends Activity implements OnClickListener{
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
+	}//fin onOptionsItemSelected
 
+	/**
+	 * Gère les clics sur les différents boutons de l'application
+	 * @param L'élément sur lequel l'utilisateur a cliqué [View]
+	 */
 	@Override
 	public void onClick(View v) {
+		//Si l'utilisateur a cliqué sur le bouton "Retour"
 		if(v.getId() == R.id.aff_sign_btnRetour)
 		{
+			//On termine l'activité
 			finish();
-		}
-	}
-}
+		}//fin if
+	}//fin onClick
+}//fin classe

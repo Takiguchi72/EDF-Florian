@@ -91,20 +91,23 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		if(resultCode == RESULT_OK)
 		{
 			Log.d("Étape", "~ L'activité \"ModificationClient\" a bien retourné un résultat");
-			//On récupère l'index du client dans la liste
-			int indexClient = data.getExtras().getInt("indexClient");
-		
-			Log.d("Étape", "~ On récupère le Client dans la bdd via son identifiant");
-			//Puis on récupère le client à modifier dans la bdd
+			
+			//On vide la liste de clients
+			for(int i = 0 ; i < listeClient.size() ; i++)
+			{
+				listeClient.remove(i);
+			}//fin for
+			
+			//On récupère tous les clients à partir de la bdd
+			bdd = new BdAdapter(this);
 			bdd.open();
-			Client clientAModifier = bdd.getClientWithIdentifiant(listeClient.get(indexClient).getIdentifiant());
+			listeClient = bdd.getListeDesClients();
 			bdd.close();
 			
-			Log.d("Étape", "~ On met à jour les données du client");
-			//On met à jour les données du client dans la liste au cas où l'utilisateur reclique dessus pour voir si les modifs ont été prises en compte par exemple.
-			listeClient.get(indexClient).setAncienReleve(clientAModifier.getAncienReleve());
-			listeClient.get(indexClient).setDateAncienReleve(clientAModifier.getDateAncienReleve());
-			listeClient.get(indexClient).setSituation(clientAModifier.getSituation());
+			//On met à jour la liste des clients
+			ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
+			listView.setOnItemClickListener(this) ;
+			listView.setAdapter(clientAdapter);
 		}//fin if
 	}//fin onActivityResult
 	

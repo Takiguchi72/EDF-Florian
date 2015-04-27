@@ -127,7 +127,6 @@ public class ModificationClient extends Activity implements OnClickListener{
 			case R.id.btnVoirSignature:
 				Log.d("Étape", "~ Click sur Voir la signature du client détecté");
 				//On vérifie que l'utilisateur a une signature dans la bdd
-//				if(leClient.getSignatureBase64().length() > 0)
 				if(!leClient.getSignatureBase64().equals(""))
 				{
 					//On va afficher la signature du client
@@ -135,6 +134,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 					
 					//En passant à la nouvelle activity l'identifiant du client
 					intentVoirSignature.putExtra("identifiant", leClient.getIdentifiant());
+					
 					//On lance l'activity
 					this.startActivity(intentVoirSignature);
 				}//fin if
@@ -173,6 +173,14 @@ public class ModificationClient extends Activity implements OnClickListener{
 			 * ~~~~~~~~~~~~~~~~ */
 			case R.id.capt_sign_btnAnnuler:
 				Log.d("Étape", "~ Click sur Annuler détecté");
+				
+				//On va retourner l'identifiant du client au cas où l'utilisateur clique sur annuler après avoir fait signer le client
+				Intent returnIntent = new Intent();
+				
+				returnIntent.putExtra("indexClient", indexClientDansListe);
+				
+				setResult(RESULT_OK, returnIntent);
+				
 				finish(); //On termine l'activité ModificationClient
 				break;
 			/* ~~~~~~~~~~~~~~~~ *
@@ -197,15 +205,29 @@ public class ModificationClient extends Activity implements OnClickListener{
 		if(resultCode == RESULT_OK)
 		{
 			Log.d("Étape", "~ L'activité \"CaptureSignature\" a bien retourné un résultat");
-		
-			Log.d("Étape", "~ Mise à jour du client en mémoire depuis la bdd");
 			
+			Log.d("Étape", "~ Mise à jour du client à partir de la signature retournée par CaptureSignature");
+			//On modifie le client actuel à partir de la signature retournée
+			leClient.setSignatureBase64(data.getExtras().getString("signatureBase64"));
+			
+			Log.d("Étape", "~ Enregistrement de la signature dans la bdd");
 			//Puis on récupère le client à modifier dans la bdd
-			bdd = new BdAdapter(this);
-			bdd.open();
-			leClient.setSignatureBase64(bdd.getClientWithIdentifiant(leClient.getIdentifiant()).getSignatureBase64());
+			bdd = new BdAdapter(this).open();
+			int resultat = bdd.updateClient(leClient.getIdentifiant(), leClient);
 			bdd.close();
 			
+			//Si SQLite a retourné 1 c'est que la modification s'est bien déroulée, donc on affiche un message de réussite
+			if(resultat == 1)
+			{
+				Log.d("Étape", "~ La signature vient d'être enregistrée dans la bdd !");
+				Toast.makeText(this, "La signature du client est enregistrée !", Toast.LENGTH_LONG).show();
+			}//fin if
+			//Sinon on affiche que l'enregistrement a échoué
+			else
+			{
+				Log.d("Étape", "~ L'enregistrement de la signature dans la bdd a échoué !");
+				Toast.makeText(this, "Impossible d'enregistrer la signature du client", Toast.LENGTH_LONG).show();
+			}//fin else
 		}//fin if
 	}//fin onActivityResult
 	
@@ -326,7 +348,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 		textViewIdentifiant			= (TextView) this.findViewById(R.id.txvIdentifiantValue);
 		textViewIdentite			= (TextView) this.findViewById(R.id.txvIdentiteValue);
 		textViewTelephone			= (TextView) this.findViewById(R.id.txvTelephone);
-		textViewAdresse				= (TextView) this.findViewById(R.id.txvAdresse);
+		textViewAdresse				= (TextView) this.findViewById(R.id.txvAdresseValue);
 		textViewCp					= (TextView) this.findViewById(R.id.txvCp);
 		textViewVille				= (TextView) this.findViewById(R.id.txvVille);
 		textViewCompteur			= (TextView) this.findViewById(R.id.txvCompteurValue);
