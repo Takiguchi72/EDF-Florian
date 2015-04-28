@@ -275,21 +275,21 @@ public class BdAdapter {
 									"30/04/14",  		2147.84));
 		Log.d("Étape", "~ 		3eme client");
 		insererClient(new Client( 	"cli3", 			"SAUVÉ", 
-									"Clarimunda",  		"81 rue du Limas", 
+									"Clarimunda",  		"23 Avenue Marhum", 
 									"64100",  			"BAYONNE", 
-									"0123456789",  		"3", 
+									"0123456789",  		"19950055130", 
 									"21/07/14",  		1264.92));
 		Log.d("Étape", "~ 		4eme client");
 		insererClient(new Client( 	"cli4", 			"COLLIN", 
-									"Stéphanie",  		"90 rue de l'Aigle", 
-									"93210",  			"LA PLAINE-SAINT-DENIS", 
+									"Stéphanie",  		"La Plaine Saint-Denis", 
+									"93210",  			"SAINT-DENIS", 
 									"0126448784",  		"19950055125", 
 									"16/08/14",  		2463.5));
 		Log.d("Étape", "~ 		5eme client");
 		insererClient(new Client( 	"cli5", 			"BOILEAU", 
-									"Olivier",  		"61 rue du Général Ailleret", 
-									"97139",  			"LES ABYMES", 
-									"0174821550",  		"3", 
+									"Olivier",  		"13 Avenue François Cevert", 
+									"72700",  			"ALLONNES", 
+									"0174821550",  		"19950055129", 
 									"13/07/14",  		1801.43));
 		Log.d("Étape", "~ 		6eme client");
 		insererClient(new Client( 	"cli6", 			"MENARD", 
@@ -299,13 +299,13 @@ public class BdAdapter {
 									"07/10/14",  		2973.81));
 		Log.d("Étape", "~ 		7eme client");
 		insererClient(new Client( 	"cli7", 			"NEUFVILLE", 
-									"Gabriel",  		"4 chemin des Bateliers", 
+									"Gabriel",  		"3 Avenue de Verdun", 
 									"20090",  			"AJACCIO", 
 									"0163458701",  		"19950055127", 
 									"20/07/14",  		945.6));
 		Log.d("Étape", "~ 		8eme client");
 		insererClient(new Client( 	"cli8", 			"DESJARDINS", 
-									"Aurélie",  		"70 rue Sbastopol", 
+									"Aurélie",  		"7 rue Polignais", 
 									"42000",  			"SAINT-ÉTIENNE", 
 									"0142087569",  		"19950055128", 
 									"06/02/14",  		1851.47));

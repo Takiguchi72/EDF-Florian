@@ -117,7 +117,8 @@ public class MainActivity extends Activity implements OnClickListener {
 		 		} catch (Exception ex) {
 		 			Log.d("Étape", "~ Impossible de vider la table Client !");
 		 			Toast.makeText(this, "Impossible de vider la table Client !", Toast.LENGTH_SHORT).show();
-		 		}
+		 		}//fin catch
+		 		
 		 		try {
 		 			bdd.insererDesClients();
 			 		Toast.makeText(this, "Réinitialisation de la bdd terminée !", Toast.LENGTH_SHORT).show();

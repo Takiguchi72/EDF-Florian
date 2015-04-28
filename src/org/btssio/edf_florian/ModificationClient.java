@@ -80,7 +80,7 @@ public class ModificationClient extends Activity implements OnClickListener{
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.modification_client, menu);
 		return true;
-	}
+	}//fin onCreateOptionMenu
 	
 	/**
 	 * Gère les clics sur les différents éléments du menu
