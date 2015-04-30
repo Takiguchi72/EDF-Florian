@@ -26,6 +26,10 @@ public class ClientAdapter extends BaseAdapter {
 		TextView textViewVille;
 	}
 	
+	public void add(Client unClient)
+	{
+		listeClients.add(unClient);
+	}
 	
 	/**
 	 * Instancie un objet de la classe ClientAdapter

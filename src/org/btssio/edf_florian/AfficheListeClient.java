@@ -1,9 +1,12 @@
 package org.btssio.edf_florian;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import classes.Client;
 import dao.BdAdapter;
 import dao.ClientAdapter;
+import daoPostgreSQL.ClientDAO;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +24,22 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	private BdAdapter bdd;
 	private Intent theIntent;
 	
+	public ListView getListView() {
+		return listView;
+	}
+
+	public void setListView(ListView listView) {
+		this.listView = listView;
+	}
+
+	public List<Client> getListeClient() {
+		return listeClient;
+	}
+
+	public void setListeClient(List<Client> listeClient) {
+		this.listeClient = listeClient;
+	}
+
 	/**
 	 * Initialise l'activité
 	 */
@@ -28,33 +47,56 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_affiche_liste_client);
-		//On Initialise la bdd
-		Log.d("Étape", "~ Initialisation de la base de données");
-		bdd = new BdAdapter(this);
-		//On ouvre la bdd
-		Log.d("Étape", "~ Ouverture de la bdd");
-		bdd.open();
-		//On supprime tous les tuples de la table pour supprimer les tuples insérrés lors de tests
-		//bdd.viderLaTable();
-		//On insère des clients dans la base
-		//bdd.insererDesClients();
-		//On récupère les clients de la base de données
-		Log.d("Étape", "~ Récupération du contenu de la table Client");
-		listeClient = bdd.getListeDesClients();
 		
-		Log.d("Étape", "~ Fermeture de la base");
-		bdd.close();
+		//On initialise l'attribut listeClient car on va y ajouter après des éléments
+		listeClient = new ArrayList<Client>();
 		
-		Log.d("Étape", "~ Attribution de la vue à listView à partir de R.id.lvListe");
-		listView = (ListView)findViewById(R.id.lvListe);
-		
-		Log.d("Étape", "~ Génération du ClientAdapter");
-		ClientAdapter clientAdapter = new ClientAdapter(this, listeClient);
-		
-		listView.setOnItemClickListener(this) ;
-		listView.setAdapter(clientAdapter);
+		//On va récupérer les clients à partir de la bdd distante, et initialiser les composants graphiques
+		initialiserListeClients();
 	}//fin onCreate
-
+	
+	/**
+	 * Récupère les Clients depuis la base de données distante en faisant appel au webService mit en place, et initialise les composants graphiques
+	 */
+	public void initialiserListeClients()
+	{
+		ClientDAO clientAccess = new ClientDAO() {
+			/**
+			 * Initialise la liste des clients à partir de la bdd après avoir reçu les données
+			 */
+			@Override
+			public void onTacheTerminee(ArrayList<Client> resultat) {
+				Log.d("Étape", "~ Parcours de la liste récupérée");
+				//Pour chaque client retourné, on initialise la liste de clients
+				for(int i = 0 ; i < resultat.size() ; i++)
+				{
+					Log.d("Test", "# Client : " + resultat.get(i).toString());
+					listeClient.add(resultat.get(i));
+				}//fin for
+				
+				Log.d("Étape", "~ Initialisation du ClientAdapter");
+				ClientAdapter clientAdapter = new ClientAdapter(AfficheListeClient.this, listeClient);
+				
+				Log.d("Étape", "~ Initialisation de la listView");
+				listView = (ListView)findViewById(R.id.lvListe);
+				listView.setOnItemClickListener(AfficheListeClient.this);
+				
+				Log.d("Étape", "~ Ajout du ClientAdapter à la listView");
+				listView.setAdapter(clientAdapter);
+			}//fin onTacheTerminee
+			
+			@Override
+			public void onTacheTerminee(Client resultat) {
+			}
+			
+			@Override
+			public void onTacheTerminee(String resultat) {
+			}
+		};
+		
+		clientAccess.getClients();	//Récupère les clients et initialise les attributs => Ligne 68
+	}//fin initialiserListeClients
+	
 	/**
 	 * Initialise le menu de l'activité
 	 * @param Le menu permettant d'initialiser celui de l'activité [Menu]
@@ -138,7 +180,7 @@ public class AfficheListeClient extends Activity implements OnItemClickListener 
 		theIntent.putExtra("situation", 			listeClient.get(position).getSituation());
 		
 		//On retourne la position du client dans la liste pour le retour de l'activité
-		theIntent.putExtra("indexClient", 			position);
+		theIntent.putExtra("indexClient", position);
 		//Lancement de l'activité
 		this.startActivityForResult(theIntent,0);
 	}//fin onItemClick
